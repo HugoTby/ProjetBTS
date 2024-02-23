@@ -15,7 +15,7 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 	serial = new QSerialPort(this);
 	server = new QWebSocketServer("WebSocket Server", QWebSocketServer::NonSecureMode, this);
 
-	// Remplacez "COM3" par le port série de votre Arduino
+	// Remplacez "COM3" par le port s?rie de votre Arduino
 	serial->setPortName("COM5");
 	serial->setBaudRate(QSerialPort::Baud9600);
 
@@ -27,7 +27,7 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 	if (serial->open(QIODevice::ReadOnly)) {
 		qDebug() << "SERIAL_PORT_OPENED_ON_COM_3.";
 
-		if (server->listen(QHostAddress::Any, 12345)) { // Choisissez le port que vous préférez
+		if (server->listen(QHostAddress::Any, 12345)) { // Choisissez le port que vous pr?f?rez
 			qDebug() << "WEBSOCKET_SERVER_OPENED_ON" << server->serverPort() << ".";
 		}
 		else {
@@ -40,11 +40,11 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 
 	qDebug() << "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n";
 
-	// Timer pour envoyer les données au client toutes les 100 millisecondes
+	// Timer pour envoyer les donn?es au client toutes les 100 millisecondes
 	connect(&sendTimer, &QTimer::timeout, this, &ArduinoReader::sendToClients);
 	sendTimer.start(100);
 
-	// Initialiser la connexion à la base de données MySQL
+	// Initialiser la connexion ? la base de donn?es MySQL
 	db = QSqlDatabase::addDatabase("QMYSQL");
 	db.setHostName("192.168.64.200");
 	db.setDatabaseName("RFID");
@@ -72,10 +72,10 @@ void ArduinoReader::readData()
 			if (!uid.isEmpty()) {
 				qDebug() << uid;
 
-				// Récupérer les données associées à l'UID depuis la base de données
+				// R?cup?rer les donn?es associ?es ? l'UID depuis la base de donn?es
 				QString jsonData = getDataFromDatabase(uid);
 
-				// Envoyer les données au client WebSocket
+				// Envoyer les donn?es au client WebSocket
 				foreach(QWebSocket * client, clients) {
 					client->sendTextMessage(jsonData);
 				}
@@ -93,7 +93,7 @@ void ArduinoReader::sendToClients()
 		QString uid = QString(uidData).remove(QRegExp("[^A-Fa-f0-9]"));
 		qDebug() << uid;
 
-		// Envoyer l'UID aux clients WebSocket connectés
+		// Envoyer l'UID aux clients WebSocket connect?s
 		foreach(QWebSocket * client, clients) {
 			client->sendTextMessage(uid);
 		}
@@ -120,17 +120,17 @@ void ArduinoReader::onSocketDisconnected()
 
 QString ArduinoReader::getDataFromDatabase(const QString& uid)
 {
-	// Exécuter la requête SQL pour récupérer les données associées à l'UID
+	// Ex?cuter la requ?te SQL pour r?cup?rer les donn?es associ?es ? l'UID
 	QSqlQuery query(db);
 	query.prepare("SELECT * FROM utilisateurs WHERE uid = :uid");
 	query.bindValue(":uid", uid);
 
 	if (!query.exec()) {
 		qDebug() << "ERROR_SQL_REQUEST :" << query.lastError().text();
-		return QString();  // Retourner une chaîne vide en cas d'erreur
+		return QString();  // Retourner une cha?ne vide en cas d'erreur
 	}
 
-	// Créer un objet JSON avec les résultats de la requête
+	// Cr?er un objet JSON avec les r?sultats de la requ?te
 	QJsonObject jsonData;
 
 	if (query.next()) {
@@ -145,7 +145,7 @@ QString ArduinoReader::getDataFromDatabase(const QString& uid)
 		jsonData["naissance"] = query.value(8).toString();
 	}
 
-	// Convertir l'objet JSON en chaîne JSON
+	// Convertir l'objet JSON en cha?ne JSON
 	QJsonDocument jsonDoc(jsonData);
 	return jsonDoc.toJson(QJsonDocument::Compact);
 }
