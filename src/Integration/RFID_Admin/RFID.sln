@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.33801.198
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RFID", "RFID\RFID.vcxproj", "{188AA710-325D-4F36-81F2-E9BC05C1ECBB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{188AA710-325D-4F36-81F2-E9BC05C1ECBB}.Debug|x64.ActiveCfg = Debug|x64
+		{188AA710-325D-4F36-81F2-E9BC05C1ECBB}.Debug|x64.Build.0 = Debug|x64
+		{188AA710-325D-4F36-81F2-E9BC05C1ECBB}.Release|x64.ActiveCfg = Release|x64
+		{188AA710-325D-4F36-81F2-E9BC05C1ECBB}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {71D28D54-8A8A-4F1F-81FF-3F166F5C4650}
+	EndGlobalSection
+EndGlobal
