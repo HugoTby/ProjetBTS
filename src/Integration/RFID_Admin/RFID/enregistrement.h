@@ -3,20 +3,20 @@
 class enregistrement
 {
 private :
-	char uid;
-	char prenom;
-	char nom;
-	char classe;
+	QString uid;
+	QString prenom;
+	QString nom;
+	QString classe;
 	bool administrateur;
-	char photo;
-	char regime;
-	char naissance;
+	QString photo;
+	QString regime;
+	QString naissance;
 	QSqlDatabase db;
 
 public :
 
-	void connectToDatabase(int hostname, int nameDatabase, int username, int password);
-	void insertToDatabase(char uid, char prenom, char nom, char classe, bool administrateur, char photo, char regime, char naissance);
+	void connectToDatabase(QString hostname, QString nameDatabase, QString username, QString password);
+	void insertToDatabase(QString uid, QString prenom, QString nom, QString classe, bool administrateur, QString photo, QString regime, QString naissance);
 
 };
 
