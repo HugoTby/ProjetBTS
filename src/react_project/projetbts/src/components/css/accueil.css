@@ -130,6 +130,10 @@ ul {
     background-color: #6c63ff;
 }
 
+.landing-page header .links li:last-child:hover {
+    background-color: #4d45f0;
+}
+
 .landing-page header .links li:not(:last-child):hover {
     color: #6c63ff;
 }
@@ -142,8 +146,23 @@ ul {
     min-height: calc(100vh - 80px);
 }
 
+.landing-page .content .container2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 140px;
+    min-height: calc(50vh - 80px);
+}
+
 @media (max-width: 767px) {
     .landing-page .content .container {
+        gap: 0;
+        min-height: calc(100vh - 101px);
+        justify-content: center;
+        flex-direction: column-reverse;
+    }
+    .landing-page .content .container2 {
+        margin-bottom: 150px;
         gap: 0;
         min-height: calc(100vh - 101px);
         justify-content: center;
@@ -168,7 +187,7 @@ ul {
     line-height: 1.6;
     font-size: 15px;
     color: #5d5d5d;
-    
+    max-width: 550px;
 }
 
 .landing-page .content .info button {
@@ -181,8 +200,12 @@ ul {
     background-color: #6c63ff;
 }
 
+.landing-page .content .info button:hover {
+    background-color: #4d45f0;
+}
+
 .landing-page .content .image img {
-    max-width: 100%;
+    max-width: 85%;
 }
 
 .logolpr{
