@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import image_trotinette from './images/undraw_scooter_re_lrsb.svg';
 import image_telephone from './images/undraw_home_screen_re_640d.svg';
 import image_statistiques from './images/undraw_statistic_chart_re_w0pk.svg';
@@ -13,8 +13,8 @@ function Accueil_component() {
             <div class="landing-page">
                 <header>
                     <div class="container">
-                        {/* <a href="#" class="logo">La <b>Providence</b></a> */}
-                        <img class="logolpr" src={logo_laprovidence} />
+                        {/* <a href={"test"} class="logo">La <b>Providence</b></a> */}
+                        <img class="logolpr" src={logo_laprovidence} alt="" />
                         <ul class="links">
                             <li>Accueil</li>
                             <li>A propos</li>
@@ -62,8 +62,49 @@ function Accueil_component() {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            
+
+            {/* footer section */}
+
+            <footer class="site-footer">
+                <div class="container3">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <h6>A propos</h6>
+                            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor.</p>
+                        </div>
+
+                        <div class="col-xs-6 col-md-3">
+                            <h6>Divers</h6>
+                            <ul class="footer-links">
+                                <li><a href={"test"}>Mentions légales</a></li>
+                                <li><a href={"test"}>Conditions générales d'utilisation</a></li>
+                                <li><a href={"test"}>Politique de confidentialité</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr></hr>
+                </div>
+                <div class="container3">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <p class="copyright-text">Copyright &copy; 2024 tout droits réservés par
+                                <a target='blank' href={"https://www.la-providence.net/fr/"}> La Providence Amiens</a>.
+                            </p>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <ul class="social-icons">
+                                <li><a class="facebook" href={"test"}><i class="fa fa-facebook"></i></a></li>
+                                <li><a class="twitter" href={"test"}><i class="fa fa-twitter"></i></a></li>
+                                <li><a class="dribbble" href={"test"}><i class="fa fa-dribbble"></i></a></li>
+                                <li><a class="linkedin" href={"test"}><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div></div>
     );
 }
 
