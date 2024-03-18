@@ -1,18 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './index.css';
-// import App from './App';
-import Accueil_component from './components/accueil';
+import AccueilComponent from './components/accueil';
+import APropos from './components/apropos';
+import Navigation from './components/Navigation'; // Importez le composant Navigation
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Accueil_component />
+    <Router>
+      <Navigation /> {/* Ajoutez le composant Navigation à l'arborescence des composants */}
+      <Routes>
+        <Route path="/" element={<AccueilComponent />} />
+        <Route path="/apropos" element={<APropos />} />
+      </Routes>
+    </Router>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
