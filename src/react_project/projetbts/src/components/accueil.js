@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import image_trotinette from './images/undraw_scooter_re_lrsb.svg';
 import image_telephone from './images/undraw_home_screen_re_640d.svg';
 import image_statistiques from './images/undraw_statistic_chart_re_w0pk.svg';
@@ -15,7 +16,7 @@ function Accueilcomponent() {
                         <div className="info">
                             <h1>Notre projet : un abri de recharge pour véhicules électriques</h1>
                             <p>Découvrez notre solution innovante pour la recharge de vos véhicules électriques. Notre abri de recharge est conçu pour offrir une expérience de recharge rapide, fiable et confortable.</p>
-                            <button>En savoir plus</button>
+                            <button> <Link to="/apropos">En savoir plus</Link></button>
                         </div>
                         <div className="image">
                             <img src={image_trotinette} alt="Abri de recharge pour véhicules électriques" />

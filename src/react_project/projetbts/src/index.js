@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './index.css';
 import AccueilComponent from './components/accueil';
 import APropos from './components/apropos';
+import Informations from './components/informations';
 import Navigation from './components/Navigation'; // Importez le composant Navigation
 import reportWebVitals from './reportWebVitals';
 
@@ -15,6 +16,7 @@ root.render(
       <Routes>
         <Route path="/" element={<AccueilComponent />} />
         <Route path="/apropos" element={<APropos />} />
+        <Route path="/informations" element={<Informations />} />
       </Routes>
     </Router>
   </React.StrictMode>
