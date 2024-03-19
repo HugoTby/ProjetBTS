@@ -7,7 +7,7 @@ function Navigation() {
       <div class="landing-page">
         <header>
           <div class="container">
-            <img class="logolpr" src="logolpr.svg" alt="" />
+          <Link to="/"><img class="logolpr" src="logolpr.svg" alt="" /></Link>
             <ul class="links">
               <li>
                 <Link to="/">Accueil</Link>

@@ -7,6 +7,7 @@ import APropos from './components/apropos';
 import Informations from './components/informations';
 import Navigation from './components/Navigation'; // Importez le composant Navigation
 import reportWebVitals from './reportWebVitals';
+import Error from './components/errorpage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,7 +18,9 @@ root.render(
         <Route path="/" element={<AccueilComponent />} />
         <Route path="/apropos" element={<APropos />} />
         <Route path="/informations" element={<Informations />} />
+        <Route path="*" element={<Error />} />
       </Routes>
+
     </Router>
   </React.StrictMode>
 );
