@@ -13,12 +13,14 @@ function Navigation() {
                 <Link to="/">Accueil</Link>
               </li>
               <li>
-                <Link to="/apropos">A propos</Link>
+                <Link to="/about">A propos</Link>
               </li>
               <li>
-                <Link to="/informations">Informations</Link>
+                <Link to="/current-news">Informations</Link>
               </li>
-              <li>Espace utilisateur</li>
+              <li>
+                <Link to="/account">Espace utilisateur</Link>
+                </li>
             </ul>
           </div>
         </header>

@@ -9,14 +9,7 @@ function Footer() {
                     <div className="col-sm-12 col-md-6">
                         <h6>À propos</h6>
                         <p className="text-justify">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
-                            risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing
-                            nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas
-                            ligula massa, varius a, semper congue, euismod non, mi. Proin
-                            porttitor, orci nec nonummy molestie, enim est eleifend mi, non
-                            fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa,
-                            scelerisque vitae, consequat in, pretium a, enim. Pellentesque
-                            congue. Ut in risus volutpat libero pharetra tempor.
+                        Lycée Privé la Providence • 146 boulevard St Quentin - 80090 Amiens • France • (+33) 3 22 33 77 77 • laprovidence.amiens@ac-amiens.fr
                         </p>
                     </div>
 
