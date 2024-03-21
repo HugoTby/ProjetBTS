@@ -5,24 +5,26 @@ import './index.css';
 import AccueilComponent from './components/accueil';
 import APropos from './components/apropos';
 import Informations from './components/informations';
-import Navigation from './components/Navigation'; // Importez le composant Navigation
 import reportWebVitals from './reportWebVitals';
 import Error from './components/errorpage';
 import EspaceUser from './components/Espaceutilisateur';
+import ForgottenPassword from './components/resetpassword';
+import UserMain from './components/user-account/main';
+import Layout from './Layout';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <Navigation /> {/* Ajoutez le composant Navigation à l'arborescence des composants */}
       <Routes>
-        <Route path="/" element={<AccueilComponent />} />
-        <Route path="/about" element={<APropos />} />
-        <Route path="/current-news" element={<Informations />} />
-        <Route path="/account" element={<EspaceUser />} />
+        <Route path="/" element={<Layout><AccueilComponent /></Layout>} />
+        <Route path="/about" element={<Layout><APropos /></Layout>} />
+        <Route path="/current-news" element={<Layout><Informations /></Layout>} />
+        <Route path="/sign-in" element={<Layout><EspaceUser /></Layout>} />
+        <Route path="/forgotten-password" element={<Layout><ForgottenPassword /></Layout>} />
+        <Route path="/user-profile" element={<UserMain />} />
         <Route path="*" element={<Error />} />
       </Routes>
-
     </Router>
   </React.StrictMode>
 );

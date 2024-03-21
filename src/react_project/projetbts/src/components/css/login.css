@@ -1,66 +1,87 @@
 * {
-    box-sizing: border-box;
-    font-family: sans-serif;
-  }
-  .login {
-    width: 320px;
-    height: 450px;
-    border: 1px solid #CCC;
-    background-color: #444;
-    background: url(https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmwwcXpvZGs4ODhrcGN2NmFlNW9tZWl2bTgzdnR6cnI5ZTkybXk0aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HCJJlbF8097pdYRNWW/giphy.gif) center center no-repeat;
-    /* default -> https://media4.giphy.com/media/BHNfhgU63qrks/giphy.gif */
-    background-size: cover;
-    margin: 30px auto;
-    border-radius: 20px;
-  }
-  .login .form {
-    width: 100%;
-    height: 100%;
-    padding: 15px 25px;
-  }
-  .login .form h2 {
-    color: #FFF;
-    text-align: center;
-    font-weight: normal;
-    font-size: 30px;
-    /* font-size: 18px; */
-    margin-top: 60px;
-    margin-bottom: 80px;
-  }
-  .login .form input {
-    width: 100%;
-    height: 40px;
-    margin-top: 20px;
-    background: rgba(255,255,255,.5);
-    border: 1px solid rgba(255,255,255,.1);
-    padding: 0 15px;
-    color: #FFF;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  .login .form input:focus {
-    border: 1px solid rgba(255,255,255,.8);
-    outline: none;
-  }
-  ::-webkit-input-placeholder {
-      color: #DDD;
-  }
-  .login .form input.submit {
-    background: rgba(255,255,255,.9);
-    color: #444;
-    font-size: 15px;
-    margin-top: 40px;
-    font-weight: bold;
-  }
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.login {
+  width: 320px;
+  height: 450px;
+  border: 1px solid #CCC;
+  background-color: #26272bc2;
+  /* background: url(https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmwwcXpvZGs4ODhrcGN2NmFlNW9tZWl2bTgzdnR6cnI5ZTkybXk0aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HCJJlbF8097pdYRNWW/giphy.gif) center center no-repeat; */
+  /* default -> https://media4.giphy.com/media/BHNfhgU63qrks/giphy.gif */
+  background-size: cover;
+  margin: 30px auto;
+  border-radius: 20px;
+}
+
+.login .form {
+  width: 100%;
+  height: 100%;
+  padding: 15px 25px;
+}
+
+.login .form h2 {
+  color: #FFF;
+  text-align: center;
+  font-weight: normal;
+  font-size: 30px;
+  /* font-size: 18px; */
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+
+.login .form h5 {
+  color: #FFF;
+  text-align: center;
+}
+
+.login .form h5:hover {
+  color: #dfdfdf;
+  text-align: center;
+}
+
+.login .form input {
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, .5);
+  border: 1px solid rgba(255, 255, 255, .1);
+  padding: 0 15px;
+  color: #FFF;
+  border-radius: 5px;
+  font-size: 14px;
+}
 
 
+.login .form input:focus {
+  border: 1px solid rgba(255, 255, 255, .8);
+  outline: none;
+}
 
-  .landing-page .content .image img {
-    max-width: 60%;
-  }
+::-webkit-input-placeholder {
+  color: #DDD;
+}
 
-  @media (max-width: 767px) {
-    .image{
-        display: none;
-    }
+.login .form input.submit {
+  background: rgba(255, 255, 255, .9);
+  color: #444;
+  font-size: 15px;
+  margin-top: 40px;
+  font-weight: bold;
+}
+
+.login .form input.submit:hover {
+  background: rgb(185, 181, 181);
+  cursor: pointer;
+}
+
+.landing-page .content .image img {
+  max-width: 60%;
+}
+
+@media (max-width: 767px) {
+  .image #signin {
+    display: none;
   }
+}

@@ -1,5 +1,6 @@
 import './css/login.css';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import image_signin from './images/undraw_sign_up_n6im.svg';
 
 
@@ -10,14 +11,15 @@ function EspaceUser() {
             <div className="content" style={{ paddingTop: '55px' }}> 
                     <div class="container2">
                         <div className="image">
-                            <img src={image_signin} alt="Abri de recharge pour véhicules électriques" />
+                            <img src={image_signin} id='signin' alt="Abri de recharge pour véhicules électriques" />
                         </div>
                         <div class="login">
                             <div class="form">
                                 <h2>Bienvenue</h2>
-                                <input type="text" placeholder="Username" />
-                                <input type="password" placeholder="Password" />
+                                <input type="text" placeholder="prenom.nom" />
+                                <input type="password" placeholder="mot de passe" />
                                 <input type="submit" value="Se connecter" class="submit" />
+                                <h5><Link to="/forgotten-password">Mot de passe oublié ?</Link></h5>
                             </div>
                         </div>
                     </div>
