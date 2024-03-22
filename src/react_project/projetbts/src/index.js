@@ -10,6 +10,7 @@ import Error from './components/errorpage';
 import EspaceUser from './components/Espaceutilisateur';
 import ForgottenPassword from './components/resetpassword';
 import UserMain from './components/user-account/main';
+import Contact from './components/contact';
 import Layout from './Layout';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -22,6 +23,7 @@ root.render(
         <Route path="/current-news" element={<Layout><Informations /></Layout>} />
         <Route path="/sign-in" element={<Layout><EspaceUser /></Layout>} />
         <Route path="/forgotten-password" element={<Layout><ForgottenPassword /></Layout>} />
+        <Route path="/contact" element={<Layout><Contact /></Layout>} />
         <Route path="/user-profile" element={<UserMain />} />
         <Route path="*" element={<Error />} />
       </Routes>

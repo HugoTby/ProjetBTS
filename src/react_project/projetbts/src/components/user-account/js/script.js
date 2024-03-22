@@ -2,6 +2,7 @@
 // Map: https://codepen.io/themustafaomar/pen/ZEGJeZq
 // Dashboard: https://codepen.io/themustafaomar/pen/jLMPKm
 
+function js_execute() {
 let dropdowns = document.querySelectorAll('.navbar .dropdown-toggler')
 let dropdownIsOpen = false
 
@@ -45,19 +46,22 @@ window.addEventListener('mouseup', (event) => {
     })
   }
 })
+};
 
-// Open links in mobiles
-function handleSmallScreens() {
-  document.querySelector('.navbar-toggler')
-    .addEventListener('click', () => {
-      let navbarMenu = document.querySelector('.navbar-menu')
+js_execute();
 
-      if (!navbarMenu.classList.contains('active')) {
-        navbarMenu.classList.add('active')
-      } else {
-        navbarMenu.classList.remove('active')
-      }
-    })
-}
+// // Open links in mobiles
+// function handleSmallScreens() {
+//   document.querySelector('.navbar-toggler')
+//     .addEventListener('click', () => {
+//       let navbarMenu = document.querySelector('.navbar-menu')
 
-handleSmallScreens()
+//       if (!navbarMenu.classList.contains('active')) {
+//         navbarMenu.classList.add('active')
+//       } else {
+//         navbarMenu.classList.remove('active')
+//       }
+//     })
+// }
+
+// handleSmallScreens()

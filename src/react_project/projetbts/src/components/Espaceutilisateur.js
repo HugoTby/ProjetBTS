@@ -8,7 +8,7 @@ function EspaceUser() {
     return (
         <div className="container">
             <div class="landing-page">
-            <div className="content" style={{ paddingTop: '55px' }}> 
+                <div className="content" style={{ paddingTop: '55px' }}>
                     <div class="container2">
                         <div className="image">
                             <img src={image_signin} id='signin' alt="Abri de recharge pour véhicules électriques" />
@@ -19,8 +19,10 @@ function EspaceUser() {
                                 <input type="text" placeholder="prenom.nom" />
                                 <input type="password" placeholder="mot de passe" />
                                 <input type="submit" value="Se connecter" class="submit" />
+                                <br /><br />
                                 <h5><Link to="/forgotten-password">Mot de passe oublié ?</Link></h5>
-                            </div>
+                            </div>                        
+                            <button><Link to="/user-profile">temp access account</Link></button>
                         </div>
                     </div>
                 </div>
