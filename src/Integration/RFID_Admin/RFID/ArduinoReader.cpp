@@ -10,9 +10,13 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 #include "enregistrement.h"
 #include <iostream>
 #include <string>
+
 
 ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 {
@@ -22,6 +26,9 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 	// Remplacez "COM3" par le port s?rie de votre Arduino
 	serial->setPortName("COM5");
 	serial->setBaudRate(QSerialPort::Baud9600);
+
+	connect(&api, & callAPI::onAPIReply, this, & ArduinoReader::onAPIReplyReceived);
+	connect(&api, &callAPI::onAPIFailed, this, &ArduinoReader::onAPIFailed);
 
 	connect(serial, SIGNAL(readyRead()), this, SLOT(readData()));
 	connect(server, &QWebSocketServer::newConnection, this, &ArduinoReader::onNewConnection);
@@ -77,12 +84,7 @@ void ArduinoReader::readData()
 				qDebug() << uid;
 
 				// R?cup?rer les donn?es associ?es ? l'UID depuis la base de donn?es
-				QString jsonData = getDataFromDatabase(uid);
-
-				// Envoyer les donn?es au client WebSocket
-				foreach(QWebSocket * client, clients) {
-					client->sendTextMessage(jsonData);
-				}
+				api.selectWhereUID(uid);
 			}
 		}
 	}
@@ -121,6 +123,34 @@ void ArduinoReader::onSocketDisconnected()
 		qDebug() << "WEBSOCKET_CONNECTION_CLOSED.";
 	}
 }
+
+void ArduinoReader::onAPIReplyReceived(QNetworkReply* reply, QByteArray jsonData)
+{
+	qDebug() << "Response:" << jsonData;
+
+
+
+	if (jsonData == "[]")
+	{
+		qDebug() << "Pas inscrit dans le systeme";
+	}
+	else
+	{
+		qDebug() << "Utilisateur trouvé";
+	}
+
+	// Envoyer les donn?es au client WebSocket
+	foreach(QWebSocket * client, clients) {
+		client->sendTextMessage(jsonData);
+	}
+}
+
+void ArduinoReader::onAPIFailed(QNetworkReply*)
+{
+	qDebug() << "API call failed";
+}
+
+
 
 QString ArduinoReader::getDataFromDatabase(const QString& uid)
 {
