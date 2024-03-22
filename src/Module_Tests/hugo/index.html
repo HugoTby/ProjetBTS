@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de site</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .resultat {
+            color: green;
+            font-weight: bold;
+        }
+
+        .erreur {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test de site</h1>
+    <div id="resultat1" class="resultat">Test site existant</div>
+    <progress id="progress1" value="0" max="100"></progress>
+    <div id="resultat2" class="resultat">Test site inexistant</div>
+    <progress id="progress2" value="0" max="100"></progress>
+    <br><br>
+    <div id="resultat3" class="resultat">Page d'accueil</div>
+    <progress id="progress3" value="0" max="100"></progress>
+    <div id="resultat4" class="resultat">Page à propos</div>
+    <progress id="progress4" value="0" max="100"></progress>
+    <div id="resultat5" class="resultat">Page des informations</div>
+    <progress id="progress5" value="0" max="100"></progress>
+    <div id="resultat6" class="resultat">Page de connexion</div>
+    <progress id="progress6" value="0" max="100"></progress>
+    <div id="resultat7" class="resultat">Page de mot de passe oublié</div>
+    <progress id="progress7" value="0" max="100"></progress>
+    <div id="resultat8" class="resultat">Page de contact</div>
+    <progress id="progress8" value="0" max="100"></progress>
+    <div id="resultat9" class="resultat">Page de l'utilisateur connecté</div>
+    <progress id="progress9" value="0" max="100"></progress>
+    <script type="text/javascript">
+        function testerUrl(url, idResultat, idProgress) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    if (xhr.responseText.trim().length > 0) {
+                        document.getElementById(idResultat).textContent = 'Test OK';
+                    } else {
+                        document.getElementById(idResultat).textContent = 'Test non OK (ressource introuvable)';
+                        document.getElementById(idResultat).classList.add('erreur');
+                    }
+                } else {
+                    document.getElementById(idResultat).textContent = 'Test non OK (le site ne répond pas)';
+                    document.getElementById(idResultat).classList.add('erreur');
+                }
+                var progressBar = document.getElementById(idProgress);
+                progressBar.value = 100;
+                testerUrlSuivant();
+            };
+            xhr.onerror = function () {
+                document.getElementById(idResultat).textContent = 'Test non OK (le site ne répond pas)';
+                document.getElementById(idResultat).classList.add('erreur');
+                var progressBar = document.getElementById(idProgress);
+                progressBar.value = 100;
+                testerUrlSuivant();
+            };
+            xhr.send();
+            var progressBar = document.getElementById(idProgress);
+            progressBar.value = 0;
+            var startTime = new Date().getTime();
+            var timer = setInterval(function () {
+                var currentTime = new Date().getTime();
+                var elapsedTime = currentTime - startTime;
+                var progress = elapsedTime / 2000 * 100;
+                if (progress > 100) {
+                    progress = 100;
+                }
+                progressBar.value = progress;
+                if (progress >= 100) {
+                    clearInterval(timer);
+                }
+            }, 10);
+        }
+
+        var urls = [
+            'http://192.168.65.105/',
+            'http://192.168.65.105:1/',
+            'http://192.168.65.105:3000/',
+            'http://192.168.65.105:3000/about/',
+            'http://192.168.65.105:3000/current-news',
+            'http://192.168.65.105:3000/sign-in/',
+            'http://192.168.65.105:3000/forgotten-password/',
+            'http://192.168.65.105:3000/contact/',
+            'http://192.168.65.105:3000/user-profile'
+        ];
+        var idResultats = [
+            'resultat1',
+            'resultat2',
+            'resultat3',
+            'resultat4',
+            'resultat5',
+            'resultat6',
+            'resultat7',
+            'resultat8',
+            'resultat9'
+        ];
+        var idProgress = [
+            'progress1',
+            'progress2',
+            'progress3',
+            'progress4',
+            'progress5',
+            'progress6',
+            'progress7',
+            'progress8',
+            'progress9'
+        ];
+        var index = 0;
+
+        function testerUrlSuivant() {
+            index++;
+            if (index < urls.length) {
+                setTimeout(function () {
+                    testerUrl(urls[index], idResultats[index], idProgress[index]);
+                }, 2000);
+            }
+        }
+
+        window.onload = function () {
+            testerUrl(urls[index], idResultats[index], idProgress[index]);
+        };
+    </script>
+</body>
+
+</html>

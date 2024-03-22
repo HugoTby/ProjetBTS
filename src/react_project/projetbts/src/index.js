@@ -25,7 +25,7 @@ root.render(
         <Route path="/forgotten-password" element={<Layout><ForgottenPassword /></Layout>} />
         <Route path="/contact" element={<Layout><Contact /></Layout>} />
         <Route path="/user-profile" element={<UserMain />} />
-        <Route path="*" element={<Error />} />
+        {/* <Route path="*" element={<Error />} /> */}
       </Routes>
     </Router>
   </React.StrictMode>
