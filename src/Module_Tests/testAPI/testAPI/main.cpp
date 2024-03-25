@@ -15,14 +15,14 @@ int main(int argc, char* argv[])
     QUrl url("http://192.168.65.105:5001/utilisateurs");
 
     QJsonObject jsonObject;
-    jsonObject.insert("nom_utilisateur", "tienot");
-    jsonObject.insert("prenom_utilisateur", "thibut");
+    jsonObject.insert("nom_utilisateur", "tiennot");
+    jsonObject.insert("prenom_utilisateur", "thibaut");
     jsonObject.insert("classe_utilisateur", "SN2");
     jsonObject.insert("badge_utilisateur", "RTU856");
     //jsonObject.insert("photo_utilisateur", "lien_photo.jpg");
     jsonObject.insert("password_utilisateur", "thjkl452");
-    jsonObject.insert("telephone_utilisateur", "0621000000");
-    jsonObject.insert("mail_utilisateur", "thib.tieot@gmail.com");
+    jsonObject.insert("telephone_utilisateur", "0621580000");
+    jsonObject.insert("mail_utilisateur", "thib.tiennot@gmail.com");
     //jsonObject.insert("infos_utilisateur", "In2fos supplémentaires");
     jsonObject.insert("quota_utilisateur", "15");
 

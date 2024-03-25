@@ -9,6 +9,8 @@
 #include <QSqlQuery>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QNetworkReply>
+#include "callAPI.h"
 
 class ArduinoReader : public QObject
 {
@@ -21,8 +23,11 @@ public slots:
 	void sendToClients();
 	void onNewConnection();
 	void onSocketDisconnected();
+	void onAPIReplyReceived(QNetworkReply*, QByteArray);
+	void onAPIFailed(QNetworkReply*);
 
 private:
+	callAPI api;
 	QSerialPort* serial;
 	QWebSocketServer* server;
 	QList<QWebSocket*> clients;
