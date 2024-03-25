@@ -7,12 +7,13 @@
   width: 320px;
   height: 450px;
   border: 1px solid #CCC;
-  background-color: #26272bc2;
+  background-color: #26272b8c;
   /* background: url(https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmwwcXpvZGs4ODhrcGN2NmFlNW9tZWl2bTgzdnR6cnI5ZTkybXk0aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HCJJlbF8097pdYRNWW/giphy.gif) center center no-repeat; */
   /* default -> https://media4.giphy.com/media/BHNfhgU63qrks/giphy.gif */
   background-size: cover;
   margin: 30px auto;
   border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .login .form {
