@@ -5,7 +5,7 @@
 
 .login {
   width: 320px;
-  height: 450px;
+  height: 480px;
   border: 1px solid #CCC;
   background-color: #26272b8c;
   /* background: url(https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmwwcXpvZGs4ODhrcGN2NmFlNW9tZWl2bTgzdnR6cnI5ZTkybXk0aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HCJJlbF8097pdYRNWW/giphy.gif) center center no-repeat; */
@@ -85,4 +85,10 @@
   .image #signin {
     display: none;
   }
+}
+
+.error-login{
+  text-align: center;
+  color: rgb(196, 57, 57) !important;
+  font-size: 15px;
 }

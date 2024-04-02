@@ -18,9 +18,9 @@ function Navigation() {
               <li>
                 <Link to="/current-news">Informations</Link>
               </li>
-              <li>
-                <Link to="/sign-in">Espace utilisateur</Link>
-                </li>
+              <Link to="/sign-in"><li>
+                Espace utilisateur
+                </li></Link>
             </ul>
           </div>
         </header>

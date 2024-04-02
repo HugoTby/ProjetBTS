@@ -6,7 +6,7 @@ import AccueilComponent from './components/accueil';
 import APropos from './components/apropos';
 import Informations from './components/informations';
 import reportWebVitals from './reportWebVitals';
-import Error from './components/errorpage';
+// import Error from './components/errorpage';
 import EspaceUser from './components/Espaceutilisateur';
 import ForgottenPassword from './components/resetpassword';
 import UserMain from './components/user-account/main';
