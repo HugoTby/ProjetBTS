@@ -1,6 +1,7 @@
 import './css/login.css';
 import React, { useState, useCallback } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 import image_signin from './images/undraw_sign_up_n6im.svg';
 
@@ -20,13 +21,18 @@ function EspaceUser() {
       });
 
       if (response.data.success) {
-        // Connexion réussie, vous pouvez enregistrer les informations de l'utilisateur dans le state de l'application ou les stocker dans le localStorage, puis rediriger l'utilisateur vers la page souhaitée.
         console.log('Connexion réussie :', response.data.user);
 
-        // Stockez les informations de l'utilisateur dans le state ou le localStorage
+        // Créez un cookie de connexion qui expire au bout d'une heure
+        const expires = new Date();
+        expires.setTime(expires.getTime() + 60 * 60 * 1000); // Ajoute 1 heure en millisecondes
+        Cookies.set('user', JSON.stringify(response.data.user), { expires });
+
         // Redirigez l'utilisateur vers la page souhaitée
-        navigate('/user-profile'); // Remplacez '/user-profile' par la route appropriée et utilisez la variable mise à jour
-      } else {
+        navigate('/user-profile');
+      }
+
+      else {
         // La connexion a échoué, affichez un message d'erreur à l'utilisateur.
         setError(response.data.message);
       }

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import './css/main.css';
 import './js/script.js';
 
 function UserMain() {
+
+    const navigate = useNavigate();
+
 
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
 
@@ -18,7 +22,12 @@ function UserMain() {
         }
     };
 
-
+    const checkCookie = () => {
+        const user = Cookies.get('user');
+        if (!user) {
+            navigate('/sign-in');
+        }
+    };
 
     const handleOutsideClick = (event) => {
         if (dropdownIsOpen && !event.target.closest('.navbar-dropdown')) {
@@ -27,7 +36,18 @@ function UserMain() {
         }
     };
 
+    const handleLogout = (event) => {
+        event.preventDefault();
+        // Supprimez le cookie de connexion
+        Cookies.remove('user');
+    };
+
+
+
     useEffect(() => {
+
+        checkCookie();
+
         const dropdownButtons = document.querySelectorAll('.dropdown-toggler');
         dropdownButtons.forEach((dropdownButton) => {
             dropdownButton.addEventListener('click', handleDropdownClick);
@@ -77,10 +97,10 @@ function UserMain() {
                             <li><a className="dropdown-toggler2" href="/about">A Propos</a></li>
                             <li><a className="dropdown-toggler2" href="/contact">Nous contacter</a></li>
                             <li>
-                                <a className="dropdown-toggler" href="">
+                                <a className="dropdown-toggler" href="" onClick={handleLogout}>
                                     {/* faire en sorte de vider la session de l'utilisateur au clic
                                     il sera automatiquement redirigé vers la racine / */}
-                                    <Link to="/">Se déconnecter</Link>
+                                    <Link to="/sign-in">Se déconnecter</Link>
                                 </a>
                             </li>
                         </ul>
