@@ -109,7 +109,7 @@ function UserTimeCapital() {
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> 
                 </div>
             </nav>
 
