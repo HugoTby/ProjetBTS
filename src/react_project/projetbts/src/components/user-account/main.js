@@ -10,6 +10,7 @@ function UserMain() {
 
 
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+    const [userId, setUserId] = useState(null);
 
     const handleDropdownClick = (event) => {
         if (event.target.classList.contains('dropdown-toggler') || event.target.classList.contains('dropdown-toggler2')) {
@@ -26,6 +27,9 @@ function UserMain() {
         const user = Cookies.get('user');
         if (!user) {
             navigate('/sign-in');
+        } else {
+            const parsedUser = JSON.parse(user);
+            setUserId(parsedUser.id_utilisateur);
         }
     };
 
@@ -107,6 +111,7 @@ function UserMain() {
                     </div>
                 </div>
             </nav>
+            {userId && <p>ID utilisateur : {userId}</p>}
         </div>
     );
 }

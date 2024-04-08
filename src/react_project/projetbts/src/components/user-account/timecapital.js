@@ -10,6 +10,8 @@ function UserTimeCapital() {
 
 
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
+    const [userQuota, setUserId] = useState(null);
+
 
     const handleDropdownClick = (event) => {
         if (event.target.classList.contains('dropdown-toggler') || event.target.classList.contains('dropdown-toggler2')) {
@@ -26,6 +28,9 @@ function UserTimeCapital() {
         const user = Cookies.get('user');
         if (!user) {
             navigate('/sign-in');
+        } else {
+            const parsedUser = JSON.parse(user);
+            setUserId(parsedUser.quota_utilisateur);
         }
     };
 
@@ -108,7 +113,8 @@ function UserTimeCapital() {
                 </div>
             </nav>
 
-            <h1>capital time</h1>
+            <h1>Capital temps</h1>
+            {userQuota && <p>Voici votre capital temps actuel {userQuota}</p>}
         </div>
     );
 }

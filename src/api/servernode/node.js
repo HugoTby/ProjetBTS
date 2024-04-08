@@ -67,6 +67,21 @@ app.get('/utilisateurs/badge_utilisateur', (req, res) => {
     });
 });
 
+// Route pour récupérer le quota utilisateur et dernier heure depot utilisation avec le badge
+app.get('/utilisateurs/badge_utilisateur/quota-depot', (req, res) => {
+    console.log( req.body);
+    //const { badge_utilisateur } = req.body;
+    const badge_utilisateur = req.query.badge_utilisateur;
+    console.log(badge_utilisateur);
+    connection.query('SELECT u.quota_utilisateur, o.heure_depot_occupation FROM utilisateur u JOIN occupation o ON u.id_utilisateur = o.id_utilisateur_occupation WHERE u.badge_utilisateur = ? ORDER BY o.heure_depot_occupation DESC LIMIT 1;', [badge_utilisateur], (error, results) => {
+        if (error) {
+            console.error('Erreur lors de la récupération des éléments :', error);
+            res.status(500).json({ error: 'Erreur lors de la récupération des éléments' });
+            return;
+        }
+        res.json(results);
+    });
+});
 
 
 // Route pour insérer un utilisateur dans la base de données

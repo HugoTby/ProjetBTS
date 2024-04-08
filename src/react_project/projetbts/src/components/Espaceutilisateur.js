@@ -68,8 +68,6 @@ function EspaceUser() {
                   />
                   <input type="submit" value="Se connecter" className="submit" />
                 </form>
-                <br />
-                <br />
                 <h5>
                   <Link to="/forgotten-password">Mot de passe oublié ?</Link>
                 </h5>
