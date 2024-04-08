@@ -30,7 +30,7 @@ function UserMain() {
     };
 
     const handleOutsideClick = (event) => {
-        if (dropdownIsOpen && !event.target.closest('.navbar-dropdown')) {
+        if (dropdownIsOpen && !event.target.closest('.navbar2-dropdown')) {
             setDropdownIsOpen(false);
             document.querySelector('.dropdown.show').classList.remove('show');
         }
@@ -65,10 +65,10 @@ function UserMain() {
 
     return (
         <div>
-            <nav className="navbar">
-                <div className="container">
-                    <div className="navbar-header">
-                        <button className="navbar-toggler" data-toggle="open-navbar1">
+            <nav className="navbar2">
+                <div className="container3">
+                    <div className="navbar2-header">
+                        <button className="navbar2-toggler" data-toggle="open-navbar1">
                             <span></span>
                             <span></span>
                             <span></span>
@@ -78,10 +78,10 @@ function UserMain() {
                         </a>
                     </div>
 
-                    <div className="navbar-menu" id="open-navbar1">
-                        <ul className="navbar-nav">
+                    <div className="navbar2-menu" id="open-navbar1">
+                        <ul className="navbar2-nav">
                             <li className="active"><a href="">Accueil</a></li>
-                            <li className="navbar-dropdown">
+                            <li className="navbar2-dropdown">
                                 <a href="" className="dropdown-toggler" data-dropdown="my-dropdown-id">
                                     Catégories <i className="fa fa-angle-down"></i>
                                 </a>

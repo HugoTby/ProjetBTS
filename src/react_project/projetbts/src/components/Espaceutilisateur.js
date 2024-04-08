@@ -47,13 +47,12 @@ function EspaceUser() {
       <div className="landing-page">
         <div className="content" style={{ paddingTop: '55px' }}>
           <div className="container2">
-            <div className="image">
+            {/* <div className="image">
               <img src={image_signin} id="signin" alt="Abri de recharge pour véhicules électriques" />
-            </div>
+            </div> */}
             <div className="login">
               <div className="form">
-                <h2>Bienvenue</h2>
-                {error && <h1 className="error-login">{error}</h1>} {/* Mettre à jour la balise ici */}
+                {/* <h2>Bienvenue</h2> */}
                 <form onSubmit={handleSubmit}>
                   <input
                     type="text"
@@ -73,13 +72,12 @@ function EspaceUser() {
                 <br />
                 <h5>
                   <Link to="/forgotten-password">Mot de passe oublié ?</Link>
-                </h5>
+                </h5>                {error && <h1 className="error-login">{error}</h1>} {/* Mettre à jour la balise ici */}
+
               </div>
-              <button>
-                <Link to="/user-profile">accès temporaire (dev only)</Link>
-              </button>
             </div>
           </div>
+
         </div>
       </div>
     </div>
