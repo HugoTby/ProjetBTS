@@ -72,8 +72,8 @@ function EspaceUser() {
                 <br />
                 <h5>
                   <Link to="/forgotten-password">Mot de passe oublié ?</Link>
-                </h5>                {error && <h1 className="error-login">{error}</h1>} {/* Mettre à jour la balise ici */}
-
+                </h5>
+                {error && <h1 className="error-login">{error}</h1>} {/* Mettre à jour la balise ici */}
               </div>
             </div>
           </div>

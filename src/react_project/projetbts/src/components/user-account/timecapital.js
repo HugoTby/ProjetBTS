@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import './css/main.css';
 import './js/script.js';
 
-function UserMain() {
+function UserTimeCapital() {
 
     const navigate = useNavigate();
 
@@ -80,7 +80,7 @@ function UserMain() {
 
                     <div className="navbar2-menu" id="open-navbar1">
                         <ul className="navbar2-nav">
-                        <li className="active"><a href=""><Link to="/user-profile">Accueil</Link></a></li>
+                            <li className="active"><a href=""><Link to="/user-profile">Accueil</Link></a></li>
                             <li className="navbar2-dropdown">
                                 <a href="" className="dropdown-toggler" data-dropdown="my-dropdown-id">
                                     Catégories <i className="fa fa-angle-down"></i>
@@ -107,8 +107,10 @@ function UserMain() {
                     </div>
                 </div>
             </nav>
+
+            <h1>capital time</h1>
         </div>
     );
 }
 
-export default UserMain;
+export default UserTimeCapital;
