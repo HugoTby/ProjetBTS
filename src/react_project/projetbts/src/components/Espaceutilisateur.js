@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
-import image_signin from './images/undraw_sign_up_n6im.svg';
+// import image_signin from './images/undraw_sign_up_n6im.svg';
 
 function EspaceUser() {
   const [username, setUsername] = useState('');

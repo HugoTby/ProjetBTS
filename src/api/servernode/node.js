@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 5001;
 
+
 app.use(cors());
 app.use(bodyParser.json());
 // Configuration de la connexion à la base de données
@@ -37,7 +38,6 @@ app.use((error, req, res, next) => {
 });
 
 
-
 // Route pour récupérer tous les éléments de la base de données
 app.get('/utilisateurs', (req, res) => {
     connection.query('SELECT utilisateur.*, occupation.*, box.*, occupation.heure_depot_occupation AS heure_depot, occupation.heure_retrait_occupation AS heure_retrait FROM utilisateur JOIN occupation ON utilisateur.id_utilisateur = occupation.id_utilisateur_occupation JOIN box ON occupation.id_box_occupation = box.id_box', (error, results) => {
@@ -53,7 +53,7 @@ app.get('/utilisateurs', (req, res) => {
 
 // Route pour récupérer les éléments de la base de données avec le badge
 app.get('/utilisateurs/badge_utilisateur', (req, res) => {
-    console.log( req.body);
+    console.log(req.body);
     //const { badge_utilisateur } = req.body;
     const badge_utilisateur = req.query.badge_utilisateur;
     console.log(badge_utilisateur);
@@ -69,7 +69,7 @@ app.get('/utilisateurs/badge_utilisateur', (req, res) => {
 
 // Route pour récupérer le quota utilisateur et dernier heure depot utilisation avec le badge
 app.get('/utilisateurs/badge_utilisateur/quota-depot', (req, res) => {
-    console.log( req.body);
+    console.log(req.body);
     //const { badge_utilisateur } = req.body;
     const badge_utilisateur = req.query.badge_utilisateur;
     console.log(badge_utilisateur);
@@ -81,6 +81,31 @@ app.get('/utilisateurs/badge_utilisateur/quota-depot', (req, res) => {
         }
         res.json(results);
     });
+});
+
+
+
+// Route pour récupérer le quota utilisateur et la dernière heure de dépôt d'utilisation avec le badge
+app.get('/utilisateurs/badge_utilisateur/quota-depot/:uid', (req, res) => {
+    const badge_utilisateur = req.params.uid;
+    console.log('Badge utilisateur reçu :', badge_utilisateur);
+
+    connection.query(
+        `SELECT u.quota_utilisateur, CASE WHEN o.id_occupation IS NULL THEN NULL ELSE o.heure_depot_occupation 
+        END AS heure_depot_occupation FROM utilisateur u LEFT JOIN occupation o ON u.id_utilisateur = o.id_utilisateur_occupation 
+        WHERE u.badge_utilisateur = ? ORDER BY o.heure_depot_occupation DESC LIMIT 1;`,
+        [badge_utilisateur],
+        (error, results) => {
+            if (error) {
+                console.error('Erreur lors de la récupération des éléments :', error);
+                res.status(500).json({ error: 'Erreur lors de la récupération des éléments' });
+                return;
+            }
+            console.log('Résultats récupérés pour le badge utilisateur :', badge_utilisateur);
+            console.log('Résultats :', results);
+            res.json(results);
+        }
+    );
 });
 
 
@@ -105,7 +130,7 @@ app.post('/utilisateurs', (req, res) => {
 // Route pour supprimer un utilisateur de la base de données en utilisant le nom et le prénom
 app.delete('/utilisateurs', (req, res) => {
     const { id_utilisateur } = req.body;
-    console.log( req.body);
+    console.log(req.body);
     connection.query('DELETE FROM utilisateur WHERE id_utilisateur = ?', [id_utilisateur], (error, results) => {
         if (error) {
             console.error('Erreur lors de la suppression de l\'utilisateur :', error);
@@ -163,14 +188,14 @@ app.put('/utilisateurs', (req, res) => {
 // Route pour la connexion
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-
+  
     console.log('Requête de connexion reçue');
     console.log('Nom d\'utilisateur :', username);
     console.log('Mot de passe :', password);
-
+  
     // Vérifier les informations d'identification de l'utilisateur dans la base de données
     connection.query(
-      'SELECT * FROM utilisateur WHERE CONCAT(prenom_utilisateur, ".", nom_utilisateur) = ? AND password_utilisateur = ?',
+      'SELECT id_utilisateur, nom_utilisateur, prenom_utilisateur, classe_utilisateur FROM utilisateur WHERE CONCAT(prenom_utilisateur, ".", nom_utilisateur) = ? AND password_utilisateur = ?',
       [username, password],
       (error, results) => {
         if (error) {
@@ -178,19 +203,55 @@ app.post('/login', (req, res) => {
           res.status(500).json({ success: false, message: 'Erreur lors de la connexion' });
           return;
         }
-
+  
         console.log('Résultats de la requête :', results);
-
+  
         if (results.length === 0) {
           res.status(401).json({ success: false, message: 'Nom d\'utilisateur ou mot de passe incorrect' });
           return;
         }
-
+  
+        const user = {
+          id_utilisateur: results[0].id_utilisateur,
+          nom_utilisateur: results[0].nom_utilisateur,
+          prenom_utilisateur: results[0].prenom_utilisateur,
+          classe_utilisateur: results[0].classe_utilisateur,
+        };
+  
         // Générer un jeton d'authentification ou renvoyer les informations utilisateur
-        res.json({ success: true, message: 'Connexion réussie', user: results[0] });
+        res.json({ success: true, message: 'Connexion réussie', user });
       }
     );
-});
+  });
+
+
+
+  app.get('/utilisateurs/quota/:username', (req, res) => {
+    const username = req.params.username;
+    console.log('Requête de quota reçue pour :', username);
+  
+    connection.query(
+      'SELECT quota_utilisateur FROM utilisateur WHERE CONCAT(prenom_utilisateur, ".", nom_utilisateur) = ?',
+      [username],
+      (error, results) => {
+        if (error) {
+          console.error('Error during quota request:', error);
+          res.status(500).json({ success: false, message: 'Erreur lors de la récupération du quota' });
+          return;
+        }
+  
+        console.log('Résultats de la requête :', results);
+  
+        if (results.length === 0) {
+          res.status(404).json({ success: false, message: "Aucun quota trouvé pour l'utilisateur" });
+          return;
+        }
+  
+        res.json({ success: true, quota: results[0].quota_utilisateur });
+      }
+    );
+  });
+  
 
 /*****************************************************************************************************************************/
 
