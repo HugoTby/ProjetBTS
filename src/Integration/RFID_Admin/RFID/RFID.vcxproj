@@ -90,8 +90,10 @@
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
+    <ClCompile Include="utilisateur.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="utilisateur.h" />
     <QtMoc Include="ArduinoReader.h" />
     <QtMoc Include="callAPI.h" />
     <ClInclude Include="enregistrement.h" />

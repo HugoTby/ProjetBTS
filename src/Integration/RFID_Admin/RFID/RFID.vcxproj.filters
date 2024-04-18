@@ -29,6 +29,9 @@
     <QtMoc Include="callAPI.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="utilisateur.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enregistrement.h">
@@ -46,6 +49,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="callAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utilisateur.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

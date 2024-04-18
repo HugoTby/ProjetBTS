@@ -35,4 +35,5 @@ private:
 	QByteArray buffer;
 	QSqlDatabase db;
 	QString getDataFromDatabase(const QString& uid);
+	void handleResponse(const QByteArray& data);
 };

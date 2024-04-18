@@ -5,6 +5,10 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QVariant>
+#include <qdebug.h>
+#include <iostream>
+
 class utilisateur : public QObject
 {
 	Q_OBJECT
@@ -26,7 +30,55 @@ private slots:
 signals:
 
 public:
-	static QMap<QString, QVariant> toUncypherJSON(const QByteArray& jsonData);
+	utilisateur(){}
+	utilisateur(const utilisateur& other)
+	{
+		id = other.id;
+		isadmin = other.isadmin;
+		nom = other.nom;
+		prenom = other.prenom;
+		classe = other.classe;
+		badge = other.badge;
+		photo = other.photo;
+		password = other.password;
+		telephone = other.telephone;
+		mail = other.mail;
+		infos = other.infos;
+		quota = other.quota;
+	}
+
+	void formUser() {
+		// Si aucun utilisateur n'est trouvé, demander les informations manquantes à l'utilisateur
+		std::string prenom_str, nom_str, classe_str, tel_str, mail_str, infos_str, password_str;
+		float quota_str;
+		std::cout << "Saisir prenom : ";
+		std::cin >> prenom_str;
+		std::cout << "Saisir nom : ";
+		std::cin >> nom_str;
+		std::cout << "Saisir classe : ";
+		std::cin >> classe_str;
+		std::cout << "Saisir tel : ";
+		std::cin >> tel_str;
+		std::cout << "Saisir mail : ";
+		std::cin >> mail_str;
+		std::cout << "Saisir password : ";
+		std::cin >> password_str;
+		std::cout << "Saisir infos : ";
+		std::getline(std::cin.ignore(), infos_str);
+		std::cout << "Saisir quota : ";
+		std::cin >> quota_str;
+
+		QString prenom = QString::fromStdString(prenom_str);
+		QString nom = QString::fromStdString(nom_str);
+		QString classe = QString::fromStdString(classe_str);
+		QString tel = QString::fromStdString(tel_str);
+		QString mail = QString::fromStdString(mail_str);
+		QString password = QString::fromStdString(password_str);
+		QString infos = QString::fromStdString(infos_str);
+		//QString quota = QString::fromStdString(quota_str);
+	}
+
+	QList<utilisateur> utilisateur::toUncypherJSON(const QByteArray& jsonData);
 	int setId(int id) {
 		this->id = id;
 	}
@@ -48,7 +100,7 @@ public:
 	QString setPrenom(QString prenom) {
 		this->prenom = prenom;
 	}
-	QString getprenom() {
+	QString getPrenom() {
 		return this->prenom;
 	}
 	QString setClasse(QString classe) {
@@ -75,6 +127,12 @@ public:
 	QString getPassword() {
 		return this->password;
 	}
+	QString setPhone(QString phone) {
+		this->telephone = phone;
+	}
+	QString getPhone() {
+		return this->telephone;
+	}
 	QString setEmail(QString mail) {
 		this->mail = mail;
 	}
@@ -93,4 +151,8 @@ public:
 	float getQuota() {
 		return this->quota;
 	}
+
+	friend QDebug operator<<(QDebug debug, const utilisateur& user);
 };
+
+QDebug operator<<(QDebug debug, const utilisateur& user);

@@ -12,6 +12,7 @@ private:
 public:
 	callAPI(QObject* parent = nullptr);
 	void selectWhereUID(QString uid);
+	void insertUser(QString uid, QString prenom, QString nom, QString classe, QString tel, QString mail, QString password, QString infos, float quota);
 
 private slots:
 	void onFinishedRequest(QNetworkReply*);

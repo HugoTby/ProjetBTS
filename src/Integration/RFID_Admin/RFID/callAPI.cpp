@@ -29,6 +29,21 @@ void callAPI::selectWhereUID(QString uid)
     manager.get(request);
 }
 
+void callAPI::insertUser(QString uid, QString prenom, QString nom, QString classe, QString tel, QString mail, QString password, QString infos, float quota)
+{
+    QUrl url("http://192.168.65.105:5001/utilisateurs");
+    QUrlQuery query;
+    query.addQueryItem("badge_utilisateur", uid);
+
+    // Ajouter le paramètre de requête à l'URL
+    url.setQuery(query);
+
+    QNetworkRequest request(url);
+
+    // Utilisez la méthode GET pour récupérer les informations
+    manager.get(request);
+}
+
 void callAPI::onFinishedRequest(QNetworkReply* reply)
 {
     if (reply->error() == QNetworkReply::NoError) {
