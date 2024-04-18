@@ -4,13 +4,14 @@ import Cookies from 'js-cookie';
 import './css/main.css';
 import './js/script.js';
 
-function UserMain() {
+function UserTimeCapital() {
 
     const navigate = useNavigate();
 
 
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
-    const [userId, setUserId] = useState(null);
+    const [userQuota, setUserId] = useState(null);
+
 
     const handleDropdownClick = (event) => {
         if (event.target.classList.contains('dropdown-toggler') || event.target.classList.contains('dropdown-toggler2')) {
@@ -29,7 +30,7 @@ function UserMain() {
             navigate('/sign-in');
         } else {
             const parsedUser = JSON.parse(user);
-            setUserId(parsedUser.id_utilisateur);
+            setUserId(parsedUser.quota_utilisateur);
         }
     };
 
@@ -84,7 +85,7 @@ function UserMain() {
 
                     <div className="navbar2-menu" id="open-navbar1">
                         <ul className="navbar2-nav">
-                        <li className="active"><a href=""><Link to="/user-profile">Accueil</Link></a></li>
+                            <li className="active"><a href=""><Link to="/user-profile">Accueil</Link></a></li>
                             <li className="navbar2-dropdown">
                                 <a href="" className="dropdown-toggler" data-dropdown="my-dropdown-id">
                                     Catégories <i className="fa fa-angle-down"></i>
@@ -108,12 +109,14 @@ function UserMain() {
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> 
                 </div>
             </nav>
-            {userId && <p>ID utilisateur : {userId}</p>}
+
+            <h1>Capital temps</h1>
+            {userQuota && <p>Voici votre capital temps actuel {userQuota}</p>}
         </div>
     );
 }
 
-export default UserMain;
+export default UserTimeCapital;

@@ -14,7 +14,7 @@ function Accueilcomponent() {
                 <div class="content">
                     <div class="container">
                         <div className="info">
-                            <h1>Notre projet : un abri de recharge pour véhicules électriques</h1>
+                            <h1>Notre projet : un abri de recharge pour bicycles électriques</h1>
                             <p>Découvrez notre solution innovante pour la recharge de vos véhicules électriques. Notre abri de recharge est conçu pour offrir une expérience de recharge rapide, fiable et confortable.</p>
                             <button> <Link to="/apropos">En savoir plus</Link></button>
                         </div>
