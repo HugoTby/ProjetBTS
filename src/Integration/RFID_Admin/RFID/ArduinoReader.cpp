@@ -22,8 +22,9 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 {
 	serial = new QSerialPort(this);
 	server = new QWebSocketServer("WebSocket Server", QWebSocketServer::NonSecureMode, this);
-	// Remplacez "COM3" par le port s?rie de votre Arduino
-	serial->setPortName("COM5");
+	// Remplacez "COMX" par le port s?rie de votre Arduino
+	QString port = "COM6";
+	serial->setPortName(port);
 	serial->setBaudRate(QSerialPort::Baud9600);
 
 	connect(&api, & callAPI::onAPIReply, this, & ArduinoReader::onAPIReplyReceived);
@@ -36,7 +37,7 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 	qDebug() << "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n";
 
 	if (serial->open(QIODevice::ReadOnly)) {
-		qDebug() << "SERIAL_PORT_OPENED_ON_COM_3.";
+		qDebug() << "SERIAL_PORT_OPENED_ON : " + port;
 
 		if (server->listen(QHostAddress::Any, 12345)) { // Choisissez le port que vous pr?f?rez
 			qDebug() << "WEBSOCKET_SERVER_OPENED_ON" << server->serverPort() << ".";
@@ -133,7 +134,7 @@ void ArduinoReader::onAPIReplyReceived(QNetworkReply* reply, QByteArray jsonData
 	if (jsonData == "[]")
 	{
 		qDebug() << "Pas inscrit dans le systeme";
-		user1.formUser();
+		//user1.formUser();
 		
 	}
 	else
