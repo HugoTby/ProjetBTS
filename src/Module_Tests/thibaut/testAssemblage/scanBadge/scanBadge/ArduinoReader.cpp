@@ -4,7 +4,7 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 {
 	serial = new QSerialPort(this);
 	server = new QWebSocketServer("WebSocket Server", QWebSocketServer::NonSecureMode, this);
-	// Remplacez "COMX" par le port s?rie de votre Arduino
+	// Remplacez "COMX" par le port série de votre Arduino
 	QString port = "COM6";
 	serial->setPortName(port);
 	serial->setBaudRate(QSerialPort::Baud9600);
@@ -17,7 +17,7 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 	if (serial->open(QIODevice::ReadOnly)) {
 		qDebug() << "SERIAL_PORT_OPENED_ON : " + port;
 
-		if (server->listen(QHostAddress::Any, 12345)) { // Choisissez le port que vous pr?f?rez
+		if (server->listen(QHostAddress::Any, 12345)) { // Choisissez le port que vous préférez
 			qDebug() << "WEBSOCKET_SERVER_OPENED_ON" << server->serverPort() << ".";
 		}
 		else {
@@ -30,9 +30,12 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 
 	qDebug() << "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n";
 
-	// Timer pour envoyer les donn?es au client toutes les 100 millisecondes
+	// Timer pour envoyer les données au client toutes les 100 millisecondes
 	connect(&sendTimer, &QTimer::timeout, this, &ArduinoReader::sendToClients);
 	sendTimer.start(100);
+
+	// Drapeau pour vérifier si le formulaire a déjà été affiché
+	formShown = false;
 }
 
 void ArduinoReader::readData()
@@ -47,9 +50,12 @@ void ArduinoReader::readData()
 			buffer = buffer.mid(endIndex);
 
 			QString uid = QString(uidData).remove(QRegExp("[^A-Fa-f0-9]"));
+			this->uid = uid; // pas sûr que ca marche
 
 			if (!uid.isEmpty()) {
 				qDebug() << uid;
+				//affichage du formulaire
+				onBadgeScanned();
 			}
 		}
 	}
@@ -64,7 +70,7 @@ void ArduinoReader::sendToClients()
 		QString uid = QString(uidData).remove(QRegExp("[^A-Fa-f0-9]"));
 		qDebug() << uid;
 
-		// Envoyer l'UID aux clients WebSocket connect?s
+		// Envoyer l'UID aux clients WebSocket connectés
 		foreach(QWebSocket * client, clients) {
 			client->sendTextMessage(uid);
 		}
@@ -85,6 +91,38 @@ void ArduinoReader::onSocketDisconnected()
 	if (clientSocket) {
 		clients.removeOne(clientSocket);
 		clientSocket->deleteLater();
-		qDebug() << "WEBSOCKET_CONNECTION_CLOSED.";                             
+		qDebug() << "WEBSOCKET_CONNECTION_CLOSED.";
 	}
+}
+
+void ArduinoReader::onBadgeScanned()
+{
+	// Vérifier si le formulaire a déjà été affiché
+	if (!formShown) {
+		// Afficher le formulaire d'inscription
+		inscription inscription;
+		QStringList infos = inscription.formUser();
+
+		// Afficher les informations de la liste
+		//qInfo << "Voici les données saisies :";
+		for (int i = 0; i < infos.size(); i++) {
+			qDebug() << "Info" << i + 1 << ":" << infos[i];
+		}
+
+		// Définir le drapeau pour indiquer que le formulaire a été affiché
+		formShown = true;
+		QString prenom = QString::fromStdString(infos[0].toStdString());
+		QString nom = QString::fromStdString(infos[1].toStdString());
+		QString classe = QString::fromStdString(infos[2].toStdString());
+		QString tel = QString::fromStdString(infos[3].toStdString());
+		QString mail = QString::fromStdString(infos[4].toStdString());
+		QString password = QString::fromStdString(infos[5].toStdString());
+		QString infosStr = QString::fromStdString(infos[6].toStdString());
+		float quota = std::stof(infos[7].toStdString());
+
+
+		// Appeler l'API pour insérer l'utilisateur dans la base de données
+		api.insertUser(uid, prenom, nom, classe, tel, mail, password, infosStr, quota);
+	}
+
 }
