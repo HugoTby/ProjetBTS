@@ -14,6 +14,7 @@ class ArduinoReader : public QObject
 
 public:
 	ArduinoReader(QObject* parent = nullptr);
+	QString getUid();
 public slots:
 	void readData();
 	void sendToClients();

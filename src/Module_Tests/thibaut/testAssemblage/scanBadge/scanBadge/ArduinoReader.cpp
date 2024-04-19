@@ -38,6 +38,11 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 	formShown = false;
 }
 
+QString ArduinoReader::getUid()
+{
+	return this->uid;
+}
+
 void ArduinoReader::readData()
 {
 	QByteArray data = serial->readAll();
@@ -122,6 +127,11 @@ void ArduinoReader::onBadgeScanned()
 
 
 		// Appeler l'API pour insérer l'utilisateur dans la base de données
+		QString uid = getUid();
+		qDebug() << "test affichage" + uid;
+		api.selectWhereUID(uid);
+		//vérifier pour que si le QJsonObject est vide, alors on insertUser, sinon on affiche user déjà inscrit
+		// le QJsonObject est affiché dans callAPI.cpp, ici : QObject::connect(&manager, &QNetworkAccessManager::finished, this, &callAPI::onFinishedRequest);
 		api.insertUser(uid, prenom, nom, classe, tel, mail, password, infosStr, quota);
 	}
 
