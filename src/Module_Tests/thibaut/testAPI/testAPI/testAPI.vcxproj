@@ -57,11 +57,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="APIReplyHandler.cpp" />
+    <ClCompile Include="APIUtilisateurReplyHandler.cpp" />
     <ClCompile Include="callAPI.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="callAPI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="APIReplyHandler.h" />
+    <ClInclude Include="APIUtilisateurReplyHandler.h" />
+    <ClInclude Include="TestAPI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

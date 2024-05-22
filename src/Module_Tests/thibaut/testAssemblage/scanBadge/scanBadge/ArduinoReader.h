@@ -1,16 +1,12 @@
 #pragma once
+#include "callAPI.h"
+#include "inscription.h"
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QWebSocketServer>
 #include <QWebSocket>
 #include <QTimer>
-#include <QtSql>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QNetworkReply>
-#include "callAPI.h"
+#include <QDebug>
 
 class ArduinoReader : public QObject
 {
@@ -18,14 +14,13 @@ class ArduinoReader : public QObject
 
 public:
 	ArduinoReader(QObject* parent = nullptr);
+	QString getUid();
 public slots:
 	void readData();
 	void sendToClients();
 	void onNewConnection();
 	void onSocketDisconnected();
-	void onAPIReplyReceived(QNetworkReply*, QByteArray);
-	void onAPIFailed(QNetworkReply*);
-
+	void onBadgeScanned();
 private:
 	callAPI api;
 	QSerialPort* serial;
@@ -33,7 +28,6 @@ private:
 	QList<QWebSocket*> clients;
 	QTimer sendTimer;
 	QByteArray buffer;
-	QSqlDatabase db;
-	QString getDataFromDatabase(const QString& uid);
-	void handleResponse(const QByteArray& data);
+	QString uid;
+	int formShown;
 };

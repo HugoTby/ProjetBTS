@@ -3,6 +3,10 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QObject>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QUrlQuery>
+
 
 class callAPI : public QObject
 {

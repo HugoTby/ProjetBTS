@@ -54,6 +54,16 @@ void callAPI::insertUser(QString uid, QString prenom, QString nom, QString class
 
 }
 
+bool callAPI::checkTimeandQuota(QString uid)
+{
+    QUrl url("http://192.168.65.105:5001/utilisateurs/badge_utilisateur/quota-depot/" + uid);
+    QUrlQuery query;
+    url.setQuery(query);
+    QNetworkRequest request(url);
+    manager.get(request);
+    return false;
+}
+
 void callAPI::onFinishedRequest(QNetworkReply* reply)
 {
     if (reply->error() == QNetworkReply::NoError) {

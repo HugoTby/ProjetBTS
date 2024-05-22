@@ -1,35 +1,13 @@
 #include "ArduinoReader.h"
-#include <QSerialPort>
-#include <QSerialPortInfo>
-#include <QWebSocketServer>
-#include <QWebSocket>
-#include <QTimer>
-#include <QtSql>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include "enregistrement.h"
-#include <iostream>
-#include <string>
-#include "utilisateur.h"
-
 
 ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 {
 	serial = new QSerialPort(this);
 	server = new QWebSocketServer("WebSocket Server", QWebSocketServer::NonSecureMode, this);
-	// Remplacez "COMX" par le port s?rie de votre Arduino
+	// Remplacez "COMX" par le port série de votre Arduino
 	QString port = "COM6";
 	serial->setPortName(port);
 	serial->setBaudRate(QSerialPort::Baud9600);
-
-	connect(&api, & callAPI::onAPIReply, this, & ArduinoReader::onAPIReplyReceived);
-	//connect(&api, &callAPI::onAPIReply, this, &ArduinoReader::onAPIReplyReceived);
-	connect(&api, &callAPI::onAPIFailed, this, &ArduinoReader::onAPIFailed);
 
 	connect(serial, SIGNAL(readyRead()), this, SLOT(readData()));
 	connect(server, &QWebSocketServer::newConnection, this, &ArduinoReader::onNewConnection);
@@ -39,7 +17,7 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 	if (serial->open(QIODevice::ReadOnly)) {
 		qDebug() << "SERIAL_PORT_OPENED_ON : " + port;
 
-		if (server->listen(QHostAddress::Any, 12345)) { // Choisissez le port que vous pr?f?rez
+		if (server->listen(QHostAddress::Any, 12345)) { // Choisissez le port que vous préférez
 			qDebug() << "WEBSOCKET_SERVER_OPENED_ON" << server->serverPort() << ".";
 		}
 		else {
@@ -52,20 +30,17 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 
 	qDebug() << "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n";
 
-	// Timer pour envoyer les donn?es au client toutes les 100 millisecondes
+	// Timer pour envoyer les données au client toutes les 100 millisecondes
 	connect(&sendTimer, &QTimer::timeout, this, &ArduinoReader::sendToClients);
 	sendTimer.start(100);
 
-	// Initialiser la connexion ? la base de donn?es MySQL
-	db = QSqlDatabase::addDatabase("QMYSQL");
-	db.setHostName("192.168.65.105");
-	db.setDatabaseName("sandbox_projet_bts");
-	db.setUserName("admin");
-	db.setPassword("a915g5GQ");
+	// Drapeau pour vérifier si le formulaire a déjà été affiché
+	formShown = false;
+}
 
-	if (!db.open()) {
-		qDebug() << "FAILED_TO_CONNECT_TO_DATABASE.";
-	}
+QString ArduinoReader::getUid()
+{
+	return this->uid;
 }
 
 void ArduinoReader::readData()
@@ -80,12 +55,12 @@ void ArduinoReader::readData()
 			buffer = buffer.mid(endIndex);
 
 			QString uid = QString(uidData).remove(QRegExp("[^A-Fa-f0-9]"));
+			this->uid = uid; // pas sûr que ca marche
 
 			if (!uid.isEmpty()) {
 				qDebug() << uid;
-
-				// R?cup?rer les donn?es associ?es ? l'UID depuis la base de donn?es
-				api.selectWhereUID(uid);
+				//affichage du formulaire
+				onBadgeScanned();
 			}
 		}
 	}
@@ -100,7 +75,7 @@ void ArduinoReader::sendToClients()
 		QString uid = QString(uidData).remove(QRegExp("[^A-Fa-f0-9]"));
 		qDebug() << uid;
 
-		// Envoyer l'UID aux clients WebSocket connect?s
+		// Envoyer l'UID aux clients WebSocket connectés
 		foreach(QWebSocket * client, clients) {
 			client->sendTextMessage(uid);
 		}
@@ -125,36 +100,39 @@ void ArduinoReader::onSocketDisconnected()
 	}
 }
 
-void ArduinoReader::onAPIReplyReceived(QNetworkReply* reply, QByteArray jsonData)
+void ArduinoReader::onBadgeScanned()
 {
-	qDebug() << "Response:" << jsonData;
-	utilisateur user1;
-	user1.toUncypherJSON(jsonData);
+	// Vérifier si le formulaire a déjà été affiché
+	if (!formShown) {
+		// Afficher le formulaire d'inscription
+		inscription inscription;
+		QStringList infos = inscription.formUser();
 
-	if (jsonData == "[]")
-	{
-		qDebug() << "Pas inscrit dans le systeme";
-		//user1.formUser();
-		
+		// Afficher les informations de la liste
+		//qInfo << "Voici les données saisies :";
+		for (int i = 0; i < infos.size(); i++) {
+			qDebug() << "Info" << i + 1 << ":" << infos[i];
+		}
+
+		// Définir le drapeau pour indiquer que le formulaire a été affiché
+		formShown = true;
+		QString prenom = QString::fromStdString(infos[0].toStdString());
+		QString nom = QString::fromStdString(infos[1].toStdString());
+		QString classe = QString::fromStdString(infos[2].toStdString());
+		QString tel = QString::fromStdString(infos[3].toStdString());
+		QString mail = QString::fromStdString(infos[4].toStdString());
+		QString password = QString::fromStdString(infos[5].toStdString());
+		QString infosStr = QString::fromStdString(infos[6].toStdString());
+		float quota = std::stof(infos[7].toStdString());
+
+
+		// Appeler l'API pour insérer l'utilisateur dans la base de données
+		QString uid = getUid();
+		qDebug() << "test affichage" + uid;
+		api.selectWhereUID(uid);
+		//vérifier pour que si le QJsonObject est vide, alors on insertUser, sinon on affiche user déjà inscrit
+		// le QJsonObject est affiché dans callAPI.cpp, ici : QObject::connect(&manager, &QNetworkAccessManager::finished, this, &callAPI::onFinishedRequest);
+		api.insertUser(uid, prenom, nom, classe, tel, mail, password, infosStr, quota);
 	}
-	else
-	{
-		qDebug() << "Utilisateur trouvé";
-	}
 
-
-	// Envoyer les donn?es au client WebSocket
-	foreach(QWebSocket * client, clients) {
-		client->sendTextMessage(jsonData);
-	}
-}
-
-void ArduinoReader::onAPIFailed(QNetworkReply*)
-{
-	qDebug() << "API call failed";
-}
-
-void handleResponse(const QByteArray& data)
-{
-	qDebug() << "Response received:" << data;
 }
