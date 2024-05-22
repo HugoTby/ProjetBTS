@@ -91,15 +91,14 @@ function UserMain() {
                                 </a>
                                 <ul className="dropdown" id="my-dropdown-id">
                                     <li><a href="/time-capital">Mon capital temps</a></li>
-                                    <li><a href="">Something else here</a></li>
+                                    <li><a href="">Ma consommation</a></li>
                                     <li className="separator"></li>
-                                    <li><a href="">Seprated link</a></li>
+                                    <li><a href="">Mon compte</a></li>
                                     <li className="separator"></li>
-                                    <li><a href="">One more seprated link.</a></li>
+                                    <li><a href="">Paramètres</a></li> 
+                                    <li><a href="/contact">Nous contacter</a></li>
                                 </ul>
                             </li>
-                            <li><a className="dropdown-toggler2" href="/about">A Propos</a></li>
-                            <li><a className="dropdown-toggler2" href="/contact">Nous contacter</a></li>
                             <li>
                                 <a className="dropdown-toggler" href="" onClick={handleLogout}>
                                     {/* faire en sorte de vider la session de l'utilisateur au clic

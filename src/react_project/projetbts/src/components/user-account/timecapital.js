@@ -22,7 +22,7 @@ function UserTimeCapital() {
     }
   };
 
-const checkCookie = () => {
+  const checkCookie = () => {
     console.log('Vérification du cookie...');
     const user = Cookies.get('user');
     if (!user) {
@@ -104,15 +104,14 @@ const checkCookie = () => {
                 </a>
                 <ul className="dropdown" id="my-dropdown-id">
                   <li><a href="/time-capital">Mon capital temps</a></li>
-                  <li><a href="">Something else here</a></li>
+                  <li><a href="">Ma consommation</a></li>
                   <li className="separator"></li>
-                  <li><a href="">Seprated link</a></li>
+                  <li><a href="">Mon compte</a></li>
                   <li className="separator"></li>
-                  <li><a href="">One more seprated link.</a></li>
+                  <li><a href="">Paramètres</a></li>
+                  <li><a href="/contact">Nous contacter</a></li>
                 </ul>
               </li>
-              <li><a className="dropdown-toggler2" href="/about">A Propos</a></li>
-              <li><a className="dropdown-toggler2" href="/contact">Nous contacter</a></li>
               <li>
                 <a className="dropdown-toggler" href="" onClick={handleLogout}>
                   {/* faire en sorte de vider la session de l'utilisateur au clic
@@ -125,8 +124,23 @@ const checkCookie = () => {
         </div>
       </nav>
 
-      <h1>Capital temps</h1>
-      {userQuota !== null && <p>Voici votre capital temps actuel : {userQuota}</p>}
+      <h1 style={{
+        fontSize: '2rem',
+        textAlign: 'center',
+        color: '#333',
+        marginBottom: '1rem'
+      }}>Capital temps</h1>
+      {userQuota !== null && (
+        <p style={{
+          fontSize: '1.25rem',
+          textAlign: 'center',
+          color: '#555',
+          marginTop: '0'
+        }}>
+          Voici votre capital temps actuel : {userQuota} heure(s)
+        </p>
+      )}
+
     </div>
   );
 }

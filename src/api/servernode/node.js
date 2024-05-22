@@ -170,7 +170,7 @@ app.put('/utilisateurs', (req, res) => {
             return;
         }
         if (results.affectedRows === 0) {
-            res.status(404).json({ message: 'Utilisateur non trouvé' });
+            res.status(404).json({ message: 'Utilisateur non trouvé gyitfiytf' });
             return;
         }
         console.log("requete update ok");
@@ -178,6 +178,47 @@ app.put('/utilisateurs', (req, res) => {
     });
 });
 
+// Route pour mettre à jour toutes les informations des boxs
+app.put('/boxs', (req, res) => {
+    const { greenEnergy, boxState } = req.body;
+
+
+    console.log("Données reçues du body : ", req.body);
+
+
+    // Construire la chaîne SQL pour mettre à jour les informations de boxs
+    const updateQuery = `
+        UPDATE box
+        SET id_statut_box = CASE
+                                WHEN id_box = 1 THEN ${boxState[0]}
+                                WHEN id_box = 2 THEN ${boxState[1]}
+                                WHEN id_box = 3 THEN ${boxState[2]}
+                                WHEN id_box = 4 THEN ${boxState[3]}
+                                WHEN id_box = 5 THEN ${boxState[4]}
+                                WHEN id_box = 6 THEN ${boxState[5]}
+                                WHEN id_box = 7 THEN ${boxState[6]}
+                                WHEN id_box = 8 THEN ${boxState[7]}
+                            END,
+            temps_vert_box = ${greenEnergy}
+        WHERE id_box IN (1, 2, 3, 4, 5, 6, 7, 8);
+    `;
+
+
+    // Mettre à jour les informations de boxs
+    connection.query(updateQuery, (error, results) => {
+        if (error) {
+            console.error('Erreur lors de la mise à jour des informations des boxs :', error);
+            res.status(500).json({ error: 'Erreur lors de la mise à jour des informations des boxs' });
+            return;
+        }
+        if (results.affectedRows === 0) {
+            res.status(404).json({ message: 'Aucune box mise à jour' });
+            return;
+        }
+        console.log("Requête update des boxs réussie");
+        res.json({ message: 'Informations des boxs mises à jour avec succès' });
+    });
+});
 
 
 
