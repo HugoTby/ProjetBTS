@@ -23,6 +23,20 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <QtRcc Include="moduleTestIHM.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtUic Include="moduleTestIHM.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="moduleTestIHM.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClCompile Include="moduleTestIHM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -32,18 +46,12 @@
     <ClCompile Include="inveo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QModbusTcpClient.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="inveo.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="test.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

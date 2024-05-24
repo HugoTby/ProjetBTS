@@ -1,8 +1,9 @@
 #include "inveo.h"
 
 inveo::inveo(QString readerIP, int port, QObject* parent)
-    : QModbusTcpClient(readerIP, port , parent)
+    : QModbusTcpClient(readerIP, port, parent)
 {
+
 }
 
 inveo::~inveo()
@@ -53,13 +54,13 @@ void inveo::readDataSlot()
 /*
 void inveo::linkEstablished()
 {
-	emit emitAcceptSound();
-	qDebug() << "signal etabli";
+    emit emitAcceptSound();
+    qDebug() << "signal etabli";
 }
 
 void inveo::linkLost()
 {
-	emit emitRejectSound();
-	qDebug() << "signal perdu";
+    emit emitRejectSound();
+    qDebug() << "signal perdu";
 }
 */

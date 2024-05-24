@@ -23,7 +23,7 @@ ArduinoReader::ArduinoReader(QObject* parent) : QObject(parent)
 	serial = new QSerialPort(this);
 	server = new QWebSocketServer("WebSocket Server", QWebSocketServer::NonSecureMode, this);
 	// Remplacez "COMX" par le port s?rie de votre Arduino
-	QString port = "COM6";
+	QString port = "COM1";
 	serial->setPortName(port);
 	serial->setBaudRate(QSerialPort::Baud9600);
 

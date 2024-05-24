@@ -8,7 +8,7 @@ class inveo :
     public QModbusTcpClient
 {
     Q_OBJECT
-    QTimer* timer;
+        QTimer* timer;
     const QString defaultData;
     QString lastDataString;
 
