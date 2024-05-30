@@ -5,6 +5,7 @@ test::test()
 {
     QString readerIP = "192.168.65.240";
     int port = 502;
+    
     o = new inveo(readerIP, port, this);
     o->connectToHost();
     // Connecter le slot onConnected à la méthode envoiTrame

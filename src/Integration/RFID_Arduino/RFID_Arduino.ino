@@ -12,7 +12,7 @@ void setup() {
   SPI.setClockDivider(SPI_CLOCK_DIV8); // réduire la vitesse de l'horloge SPI à la moitié de la vitesse par défaut
 
   mfrc522.PCD_Init();   // Initiate MFRC522
-  Serial.println("Scan your MIFARE card");
+  //Serial.println("Scan your MIFARE card");
 }
 
 void loop() {

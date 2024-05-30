@@ -189,7 +189,7 @@ public:
     void readMultipleInputsStatusFC2(quint16 startAddress, quint16 nbInput);
 
     void presetMultipleRegistersFC16(quint16 startAddress, QVector<quint16> values);
-   
+
 signals:
     // FC 06 (0x06)
     void onWriteSingleWordSentence(bool writeSuccess, quint16 wordAddress, quint16 wordValue);

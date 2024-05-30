@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     TestAPI test;
    
    // premier module de test
-   // test.startTestsInsert();
+   test.startTestsInsert();
     
     // deuxième module de test
     //test.startTestsCheckTimeAndQuota();
