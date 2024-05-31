@@ -12,10 +12,10 @@ int main(int argc, char* argv[])
    //test.startTestsInsert();
     
     // deuxième module de test
-    //test.startTestsCheckTimeAndQuota();
+    test.startTestsCheckTimeAndQuota();
 
     // troisième module de test
-     test.startTestsGetInfos();
+     //test.startTestsGetInfos();
     
 
     return a.exec();

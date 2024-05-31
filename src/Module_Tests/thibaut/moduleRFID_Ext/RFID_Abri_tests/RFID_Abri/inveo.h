@@ -3,6 +3,7 @@
 #include <qtimer.h>
 #include <QModbusDataUnit>
 #include <QModbusReply>
+#include "callAPI.h"
 
 class inveo :
     public QModbusTcpClient
@@ -11,7 +12,7 @@ class inveo :
     QTimer* timer;
     const QString defaultData;
     QString lastDataString;
-
+    callAPI api;
 public:
     inveo(QString readerIP, int port = 502, QObject* parent = nullptr);
     virtual ~inveo();

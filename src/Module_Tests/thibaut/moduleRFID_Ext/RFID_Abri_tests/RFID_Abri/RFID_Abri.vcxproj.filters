@@ -35,6 +35,9 @@
     <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="callAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QModbusTcpClient.h">
@@ -44,6 +47,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="test.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="callAPI.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

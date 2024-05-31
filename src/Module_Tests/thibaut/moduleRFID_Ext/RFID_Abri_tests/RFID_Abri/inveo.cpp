@@ -118,5 +118,6 @@ void inveo::readDataSlot()
 
 void inveo::traitementInfos(QString cardData)
 {
-
+    api.checkTimeandQuota(cardData);
+    emit &callAPI::onAPIReply;
 }
