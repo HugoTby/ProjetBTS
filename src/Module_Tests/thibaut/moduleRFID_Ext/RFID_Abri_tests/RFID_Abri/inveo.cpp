@@ -7,7 +7,7 @@ inveo::inveo(QString readerIP, int port, QObject* parent)
     connect(this, &inveo::linkEstablished, this, &inveo::onConnected);
     connect(this, &QModbusTcpClient::onReadMultipleHoldingRegistersSentence, this, &inveo::receiveMultipleHoldingRegistersSentence);
     connect(this, &inveo::linkLost, this, &inveo::onDisconnected);
-    connect(this, &inveo::cardScanned, this, &inveo);
+    connect(this, &inveo::cardScanned, this, &inveo::traitementInfos);
 }
 
 
