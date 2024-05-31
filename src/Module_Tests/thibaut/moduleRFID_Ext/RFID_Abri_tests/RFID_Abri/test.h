@@ -7,7 +7,7 @@ class test : public QObject
 public :
 	void envoiTrame();
 	test();
-
+	
 private:
 	inveo* o;
 };

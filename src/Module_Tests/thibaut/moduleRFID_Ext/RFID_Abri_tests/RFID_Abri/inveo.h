@@ -24,6 +24,7 @@ private slots:
     void onConnected();
     void onDisconnected();
     void readDataSlot();
+    void traitementInfos(QString cardData);
 signals:
     void linkEstablished();
     void linkLost();
