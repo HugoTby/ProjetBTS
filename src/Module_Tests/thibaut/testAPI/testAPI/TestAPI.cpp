@@ -17,7 +17,7 @@ void TestAPI::onAPIFailed(QNetworkReply* reply)
 void TestAPI::startTestsInsert()
 {
     qInfo() << "Test /utilisateurs";
-    QString uid = "EQJ255";
+    QString uid = "EQJ255654";
     QString prenom = "thibaut";
     QString nom = "tiennot";
     QString classe = "SN2";
@@ -41,7 +41,7 @@ void TestAPI::startTestsGetInfos()
 void TestAPI::startTestsCheckTimeAndQuota()
 {
     qInfo() << "Test /utilisateurs/quota-depot/:uid";
-    QString uid = "E13BD99";
+    QString uid = "ABCDEZ";
     api.checkTimeandQuota(uid);
 }
 

@@ -1,23 +1,24 @@
 #include "inveo.h"
+#define DEFAULT_DATA "00000000000000"
 
 inveo::inveo(QString readerIP, int port, QObject* parent)
-    : QModbusTcpClient(readerIP, port, parent) 
+    : QModbusTcpClient(readerIP, port, parent), defaultData(DEFAULT_DATA)
 {
+    connect(this, &inveo::linkEstablished, this, &inveo::onConnected);
+    connect(this, &QModbusTcpClient::onReadMultipleHoldingRegistersSentence, this, &inveo::receiveMultipleHoldingRegistersSentence);
+    connect(this, &inveo::linkLost, this, &inveo::onDisconnected);
 
-    QObject::connect(this, &inveo::linkEstablished, this, &inveo::onConnected);
-    QObject::connect(this, &inveo::linkLost, this, &inveo::onDisconnected);
-
-    // Créer un QTimer qui se déclenche toutes les secondes
+    // Create a QTimer that triggers every second
     timer = new QTimer(this);
     timer->setInterval(1000);
 
-    // Connecter le signal timeout() du QTimer au slot readDataSlot() de la classe inveo
-    QObject::connect(timer, &QTimer::timeout, this, &inveo::readDataSlot);
+    // Connect the timeout() signal of the QTimer to the readDataSlot() slot of the inveo object
+    connect(timer, &QTimer::timeout, this, &inveo::readDataSlot);
 
-    // Démarrer le QTimer
+    // Start the QTimer
     timer->start();
-    //connect(this, &QModbusTcpClient::connected, this, &inveo::onConnected); //faire tourner le timer d'écoute toutes les secondes
 }
+
 
 inveo::~inveo()
 {
@@ -28,8 +29,6 @@ inveo::~inveo()
 void inveo::connectToHost()
 {
     QModbusTcpClient::connectToHost();
-    timer->setInterval(1000);
-    timer->start();
     if (QTcpSocket::ConnectedState) {
         emit linkEstablished();
     }
@@ -63,17 +62,18 @@ void inveo::emitRejectSound()
 
 void inveo::receiveMultipleHoldingRegistersSentence(quint16 startAddress, QVector<quint16> values)
 {
+    qDebug() << values;
 }
 
 void inveo::onConnected()
 {
     emitAcceptSound();
-    QModbusTcpClient::onDataRecv();
 }
 
 void inveo::onDisconnected()
 {
     emitRejectSound();
+    timer->stop();
 }
 
 void inveo::readDataSlot()
@@ -83,6 +83,9 @@ void inveo::readDataSlot()
         quint16 startAddress = 1; 
         quint16 nbWord = 24; 
         QModbusTcpClient::readMultipleHoldingRegistersFC3(startAddress, nbWord);
-        qDebug() << "ecoute du lecteur";
+        //receiveMultipleHoldingRegistersSentence(startAddress);
+        //emit cardScanned;
+        //emitAcceptSound();
+        //qDebug() << "ecoute du lecteur";
     }
 }

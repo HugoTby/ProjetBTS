@@ -20,7 +20,7 @@ public:
     void emitAcceptSound();
     void emitRejectSound();
 private slots:
-    void receiveMultipleHoldingRegistersSentence(quint16 startAdress, QVector <quint16> values);
+    void receiveMultipleHoldingRegistersSentence(quint16 startAddress, QVector<quint16> values);
     void onConnected();
     void onDisconnected();
     void readDataSlot();

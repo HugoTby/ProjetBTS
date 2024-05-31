@@ -77,10 +77,10 @@ void ReadMultipleHoldingRegistersFC3Request::decodeAndCallback(QVector<unsigned 
             int idx = 9 + (i * 2);
             quint16 currentValue = (extractedData[idx] << 8) | extractedData[idx + 1];
             values.push_back(currentValue);
-            getClient()->onReadMultipleHoldingRegistersSentenceSingleValue(startAddress + i, currentValue);
+            emit getClient()->onReadMultipleHoldingRegistersSentenceSingleValue(startAddress + i, currentValue);
         }
 
-        getClient()->onReadMultipleHoldingRegistersSentence(this->startAddress, values);
+        emit getClient()->onReadMultipleHoldingRegistersSentence(this->startAddress, values);
     }
     else {
         qDebug() << "ReadMultipleHoldingRegistersFC3Request::decodeAndCallback - Received an incoherent sentence to request.";
