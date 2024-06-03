@@ -37,7 +37,6 @@ void callAPI::GetInfosQuotaHeures(QNetworkReply* reply, QByteArray data)
 {
     // Parser la réponse JSON
     qDebug() << data;
-    //je recup bien les données dans la data mais pas dans la conversion de json a float/qdatatime apres cette etape 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll());
     QJsonObject jsonObj = jsonDoc.object();
 
