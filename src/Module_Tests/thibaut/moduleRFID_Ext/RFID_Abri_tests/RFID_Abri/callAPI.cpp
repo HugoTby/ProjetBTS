@@ -41,7 +41,7 @@ void callAPI::GetInfosQuotaHeures(QNetworkReply* reply, QByteArray data)
 
     // Récupérer les valeurs des clés dans l'objet JSON
     float quota = jsonObj["quota_utilisateur"].toVariant().toFloat();
-    QString boxDispo = jsonObj["freeBox"].toString();
+    int boxDispo = jsonObj["freeBox"].toInt();
     QDateTime heure;
     if (!jsonObj["heure_depot_occupation"].isNull()) {
         QString dateTimeStr = jsonObj["heure_depot_occupation"].toString();
@@ -50,10 +50,9 @@ void callAPI::GetInfosQuotaHeures(QNetworkReply* reply, QByteArray data)
 
     // Vérifier les conditions d'accès
     bool userCanAccessBox;
-    //qDebug() << quota;
     if (quota >= 1 && (heure.isNull() || heure.secsTo(QDateTime::currentDateTime()) >= 90000) && boxDispo != NULL) {
         userCanAccessBox = true;
-        qDebug() << "l'utilisateur dispose d'un quota suffisant et a déposé pour la dernière fois un véhicule il y'a plus de 25 heures, voici le box que vous pouvez utiliser :" + boxDispo;
+        qDebug() << "l'utilisateur dispose d'un quota suffisant et a déposé pour la dernière fois un véhicule il y'a plus de 25 heures, voici le box que vous pouvez utiliser :" + QString::number(boxDispo);
     }
     else {
         userCanAccessBox = false;

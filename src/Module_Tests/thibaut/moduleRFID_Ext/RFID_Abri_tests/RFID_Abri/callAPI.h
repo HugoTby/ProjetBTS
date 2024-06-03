@@ -17,7 +17,6 @@ public:
 	callAPI(QObject* parent = nullptr);
 	void selectWhereUID(QString uid);
 	void checkTimeandQuota(QString uid);
-
 private slots:
 	void onFinishedRequest(QNetworkReply*);
 	void GetInfosQuotaHeures(QNetworkReply*, QByteArray);
@@ -25,5 +24,6 @@ private slots:
 signals:
 	void onAPIReply(QNetworkReply*, QByteArray);
 	void onAPIFailed(QNetworkReply*);
+	void onBoxDispoReceived(int boxDispo);
 };
 
