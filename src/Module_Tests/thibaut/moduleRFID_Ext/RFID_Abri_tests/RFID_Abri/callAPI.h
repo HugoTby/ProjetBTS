@@ -6,13 +6,14 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QUrlQuery>
-
+#include <QSerialPort>
 
 class callAPI : public QObject
 {
 	Q_OBJECT
 private:
 	QNetworkAccessManager manager;
+	QSerialPort* serial;
 public:
 	callAPI(QObject* parent = nullptr);
 	void selectWhereUID(QString uid);
@@ -20,7 +21,7 @@ public:
 private slots:
 	void onFinishedRequest(QNetworkReply*);
 	void GetInfosQuotaHeures(QNetworkReply*, QByteArray);
-
+	void allumerLed(int boxDispo);
 signals:
 	void onAPIReply(QNetworkReply*, QByteArray);
 	void onAPIFailed(QNetworkReply*);

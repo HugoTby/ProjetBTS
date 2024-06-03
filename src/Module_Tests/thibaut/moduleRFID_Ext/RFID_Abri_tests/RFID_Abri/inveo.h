@@ -20,7 +20,6 @@ public:
     virtual void deleteLater();
     void emitAcceptSound();
     void emitRejectSound();
-    void allumerLed(QString boxDispo);
 private slots:
     void receiveMultipleHoldingRegistersSentence(quint16 startAddress, QVector<quint16> values);
     void onConnected();

@@ -4,6 +4,7 @@
 inveo::inveo(QString readerIP, int port, QObject* parent)
     : QModbusTcpClient(readerIP, port, parent), defaultData(DEFAULT_DATA), lastDataString(DEFAULT_DATA)
 {
+    timer = new QTimer(this);
     connect(this, &inveo::linkEstablished, this, &inveo::onConnected);
     connect(this, &QModbusTcpClient::onReadMultipleHoldingRegistersSentence, this, &inveo::receiveMultipleHoldingRegistersSentence);
     connect(this, &inveo::linkLost, this, &inveo::onDisconnected);
@@ -85,7 +86,7 @@ void inveo::receiveMultipleHoldingRegistersSentence(quint16 startAddress, QVecto
 void inveo::onConnected()
 {
     emitAcceptSound();
-    timer = new QTimer(this);
+    
     timer->setInterval(1000);
     connect(timer, &QTimer::timeout, this, &inveo::readDataSlot);
     timer->start();

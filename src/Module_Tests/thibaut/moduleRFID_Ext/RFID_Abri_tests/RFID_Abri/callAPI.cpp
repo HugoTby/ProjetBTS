@@ -1,10 +1,11 @@
 #include "callAPI.h"
-
+#include "inveo.h"
 callAPI::callAPI(QObject* parent)
     : QObject(parent)
 {
     QObject::connect(&manager, &QNetworkAccessManager::finished, this, &callAPI::onFinishedRequest);
     connect(this, &callAPI::onAPIReply, this, &callAPI::GetInfosQuotaHeures);
+    QObject::connect(this, &callAPI::onBoxDispoReceived, &callAPI::allumerLed);
 }
 
 void callAPI::selectWhereUID(QString uid)
@@ -53,6 +54,7 @@ void callAPI::GetInfosQuotaHeures(QNetworkReply* reply, QByteArray data)
     if (quota >= 1 && (heure.isNull() || heure.secsTo(QDateTime::currentDateTime()) >= 90000) && boxDispo != NULL) {
         userCanAccessBox = true;
         qDebug() << "l'utilisateur dispose d'un quota suffisant et a déposé pour la dernière fois un véhicule il y'a plus de 25 heures, voici le box que vous pouvez utiliser :" + QString::number(boxDispo);
+        emit onBoxDispoReceived(boxDispo);
     }
     else {
         userCanAccessBox = false;
@@ -60,6 +62,34 @@ void callAPI::GetInfosQuotaHeures(QNetworkReply* reply, QByteArray data)
     }
 }
 
+void callAPI::allumerLed(int boxDispo)
+{
+    serial = new QSerialPort(this);
+    QString port = "COM7";
+    serial->setPortName(port);
+    serial->setBaudRate(QSerialPort::Baud9600);
+    // Ouvrir le port série en mode écriture seule
+    if (serial->open(QIODevice::WriteOnly))
+    {
+        // Convertir la commande en QByteArray pour l'envoyer sur le port série
+        QString command = "LEDON_PLAN" + QString::number(boxDispo + 1) + "\r\n";
+        qDebug() << command;
+        //qDebug() << "caca";
+        // Écrire la commande sur le port série
+        serial->write(command.toLatin1());
+
+        // Attendre que la commande soit envoyée complètement
+        serial->waitForBytesWritten(1000);
+
+        // Fermer le port série
+        serial->close();
+    }
+    else
+    {
+        // Gérer l'erreur d'ouverture du port série
+        qDebug() << "Erreur d'ouverture du port série :" << serial->errorString();
+    }
+}
 
 void callAPI::onFinishedRequest(QNetworkReply* reply)
 {
