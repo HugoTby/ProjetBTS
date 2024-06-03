@@ -39,9 +39,7 @@ void callAPI::GetInfosQuotaHeures(QNetworkReply* reply, QByteArray data)
     qDebug() << data;
     //je recup bien les données dans la data mais pas dans la conversion de json a float/qdatatime apres cette etape 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll());
-    qDebug() << jsonDoc;
     QJsonObject jsonObj = jsonDoc.object();
-    qDebug() << jsonObj;
 
     // Récupérer les valeurs des clés dans l'objet JSON
     float quota = jsonObj["quota_utilisateur"].toVariant().toFloat();

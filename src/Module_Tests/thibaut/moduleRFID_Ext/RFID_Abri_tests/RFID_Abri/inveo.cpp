@@ -64,29 +64,20 @@ void inveo::receiveMultipleHoldingRegistersSentence(quint16 startAddress, QVecto
     QString uidHex2 = QString::asprintf("%02X", uid2);
     QString uidHex3 = QString::asprintf("%02X", uid3);
     QString uidHex4 = QString::asprintf("%02X", uid4);
-
-    // Supprimer les zéros en début de chaque chaîne hexadécimale
-    //uidHex1.remove(0, uidHex1.indexOf(QRegExp("[^0]")));
-    //uidHex2.remove(0, uidHex2.indexOf(QRegExp("[^0]")));
-    //uidHex3.remove(0, uidHex3.indexOf(QRegExp("[^0]")));
-    //uidHex4.remove(0, uidHex4.indexOf(QRegExp("[^0]")));
-
-    // Concaténer les valeurs hexadécimales pour obtenir l'UID complet
     QString uidHex = uidHex1 + uidHex2 + uidHex3 + uidHex4;
     if (uidHex != defaultData && uidHex != lastDataString) {
         emit cardScanned(uidHex);
         qDebug() << "nouvelle carte scannée";
+        qDebug() << "UID :" << uidHex;
         lastDataString = uidHex;
     }
     else if (uidHex == defaultData) {
         lastDataString = "";
+        qDebug() << "aucune carte scannée";
     }
-    else {
-        qDebug() << "aucune carte scannée ou meme carte scannée";
+    else if(uidHex == lastDataString){
+        qDebug() << "meme carte scannée";
     }
-
-    // Afficher l'UID complet
-    qDebug() << "UID :" << uidHex;
 }
 
 
