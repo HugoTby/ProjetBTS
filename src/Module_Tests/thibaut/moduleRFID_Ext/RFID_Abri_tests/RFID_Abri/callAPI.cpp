@@ -26,7 +26,7 @@ void callAPI::selectWhereUID(QString uid)
 
 void callAPI::checkTimeandQuota(QString uid)
 {
-    QUrl url("http://192.168.65.105:5001/utilisateurs/badge_utilisateur/quota-depot/" + uid);
+    QUrl url("http://192.168.65.105:5001/utilisateurs/badge_utilisateur/quota-depot-freeboxs/" + uid);
     QUrlQuery query;
     url.setQuery(query);
     QNetworkRequest request(url);
@@ -36,12 +36,12 @@ void callAPI::checkTimeandQuota(QString uid)
 void callAPI::GetInfosQuotaHeures(QNetworkReply* reply, QByteArray data)
 {
     // Parser la réponse JSON
-    qDebug() << data;
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll());
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
     QJsonObject jsonObj = jsonDoc.object();
 
     // Récupérer les valeurs des clés dans l'objet JSON
     float quota = jsonObj["quota_utilisateur"].toVariant().toFloat();
+    QString boxDispo = jsonObj["freeBox"].toString();
     QDateTime heure;
     if (!jsonObj["heure_depot_occupation"].isNull()) {
         QString dateTimeStr = jsonObj["heure_depot_occupation"].toString();
@@ -50,17 +50,17 @@ void callAPI::GetInfosQuotaHeures(QNetworkReply* reply, QByteArray data)
 
     // Vérifier les conditions d'accès
     bool userCanAccessBox;
-    qDebug() << quota;
-    if (quota >= 1 && (heure.isNull() || heure.secsTo(QDateTime::currentDateTime()) >= 90000)) {
+    //qDebug() << quota;
+    if (quota >= 1 && (heure.isNull() || heure.secsTo(QDateTime::currentDateTime()) >= 90000) && boxDispo != NULL) {
         userCanAccessBox = true;
-        qDebug() << "l'utilisateur dispose d'un quota suffisant et a déposé pour la dernière fois un véhicule il y'a plus de 25 heures";
+        qDebug() << "l'utilisateur dispose d'un quota suffisant et a déposé pour la dernière fois un véhicule il y'a plus de 25 heures, voici le box que vous pouvez utiliser :" + boxDispo;
     }
     else {
         userCanAccessBox = false;
         qDebug() << "conditions non respectées";
     }
-
 }
+
 
 void callAPI::onFinishedRequest(QNetworkReply* reply)
 {
