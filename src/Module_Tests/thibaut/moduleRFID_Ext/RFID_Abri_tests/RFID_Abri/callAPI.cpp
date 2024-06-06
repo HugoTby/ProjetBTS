@@ -3,9 +3,25 @@
 callAPI::callAPI(QObject* parent)
     : QObject(parent)
 {
+    serial = new QSerialPort(this);
+    timer = new QTimer(this);
+    QString port = "COM7";
+    serial->setPortName(port);
+    serial->setBaudRate(QSerialPort::Baud9600);
+    // Ouvrir le port série en mode écriture seule
+    if (serial->open(QIODevice::WriteOnly))
+    {
+        qDebug() << "port serie ouvert";
+    }
+    else
+    {
+        qDebug() << "Erreur d'ouverture du port série :" << serial->errorString();
+    }
+   
     QObject::connect(&manager, &QNetworkAccessManager::finished, this, &callAPI::onFinishedRequest);
     connect(this, &callAPI::onAPIReply, this, &callAPI::GetInfosQuotaHeures);
     QObject::connect(this, &callAPI::onBoxDispoReceived, &callAPI::allumerLed);
+
 }
 
 void callAPI::selectWhereUID(QString uid)
@@ -28,6 +44,15 @@ void callAPI::selectWhereUID(QString uid)
 void callAPI::checkTimeandQuota(QString uid)
 {
     QUrl url("http://192.168.65.105:5001/utilisateurs/badge_utilisateur/quota-depot-freeboxs/" + uid);
+    QUrlQuery query;
+    url.setQuery(query);
+    QNetworkRequest request(url);
+    manager.get(request);
+}
+
+void callAPI::verifyBoxUsedByUser(QString uid)
+{
+    QUrl url("http://192.168.65.105:5001/utilisateurs/badge_utilisateur/boxUsed/" + uid);
     QUrlQuery query;
     url.setQuery(query);
     QNetworkRequest request(url);
@@ -64,31 +89,12 @@ void callAPI::GetInfosQuotaHeures(QNetworkReply* reply, QByteArray data)
 
 void callAPI::allumerLed(int boxDispo)
 {
-    serial = new QSerialPort(this);
-    QString port = "COM7";
-    serial->setPortName(port);
-    serial->setBaudRate(QSerialPort::Baud9600);
-    // Ouvrir le port série en mode écriture seule
-    if (serial->open(QIODevice::WriteOnly))
-    {
-        // Convertir la commande en QByteArray pour l'envoyer sur le port série
-        QString command = "LEDON_PLAN" + QString::number(boxDispo + 1) + "\r\n";
-        qDebug() << command;
-        //qDebug() << "caca";
-        // Écrire la commande sur le port série
-        serial->write(command.toLatin1());
-
-        // Attendre que la commande soit envoyée complètement
-        serial->waitForBytesWritten(1000);
-
-        // Fermer le port série
-        serial->close();
-    }
-    else
-    {
-        // Gérer l'erreur d'ouverture du port série
-        qDebug() << "Erreur d'ouverture du port série :" << serial->errorString();
-    }
+    QString command = "LEDON_PLAN" + QString::number(boxDispo + 1);
+    // Écrire la commande sur le port série
+    serial->write(command.toLatin1());
+    qDebug() << command;
+    // Attendre que la commande soit envoyée complètement
+    serial->waitForBytesWritten(1000);
 }
 
 void callAPI::onFinishedRequest(QNetworkReply* reply)

@@ -5,6 +5,7 @@ inveo::inveo(QString readerIP, int port, QObject* parent)
     : QModbusTcpClient(readerIP, port, parent), defaultData(DEFAULT_DATA), lastDataString(DEFAULT_DATA)
 {
     timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &inveo::readDataSlot);
     connect(this, &inveo::linkEstablished, this, &inveo::onConnected);
     connect(this, &QModbusTcpClient::onReadMultipleHoldingRegistersSentence, this, &inveo::receiveMultipleHoldingRegistersSentence);
     connect(this, &inveo::linkLost, this, &inveo::onDisconnected);
@@ -86,9 +87,7 @@ void inveo::receiveMultipleHoldingRegistersSentence(quint16 startAddress, QVecto
 void inveo::onConnected()
 {
     emitAcceptSound();
-    
-    timer->setInterval(1000);
-    connect(timer, &QTimer::timeout, this, &inveo::readDataSlot);
+    timer->setInterval(2000);
     timer->start();
 }
 
@@ -110,6 +109,7 @@ void inveo::readDataSlot()
 
 void inveo::traitementInfos(QString cardData)
 {
+    //vérifier ici si l'UID est associé à un box, si oui, on ouvre le box, sinon on check le time et quota
     api.checkTimeandQuota(cardData);
     emit &callAPI::onAPIReply;
 }

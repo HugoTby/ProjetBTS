@@ -14,10 +14,15 @@ class callAPI : public QObject
 private:
 	QNetworkAccessManager manager;
 	QSerialPort* serial;
+	QTimer* timer;
 public:
 	callAPI(QObject* parent = nullptr);
+	~callAPI() {
+		serial->close();
+	}
 	void selectWhereUID(QString uid);
 	void checkTimeandQuota(QString uid);
+	void verifyBoxUsedByUser(QString uid);
 private slots:
 	void onFinishedRequest(QNetworkReply*);
 	void GetInfosQuotaHeures(QNetworkReply*, QByteArray);
