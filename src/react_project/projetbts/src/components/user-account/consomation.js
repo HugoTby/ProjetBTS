@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Chart from 'chart.js/auto';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 import './css/main.css';
 import './js/script.js';
 
-function UserMain() {
+import GraphiqueEnergie from './GraphiqueEnergie';
+import TableauPanneau from './TableauPanneau';
 
+function UserConsumption() {
     const navigate = useNavigate();
 
-
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
-    const [userId, setUserId] = useState(null);
+    const [userQuota, setUserQuota] = useState(null);
 
     const handleDropdownClick = (event) => {
         if (event.target.classList.contains('dropdown-toggler') || event.target.classList.contains('dropdown-toggler2')) {
@@ -24,12 +27,14 @@ function UserMain() {
     };
 
     const checkCookie = () => {
+        console.log('Vérification du cookie...');
         const user = Cookies.get('user');
         if (!user) {
             navigate('/sign-in');
         } else {
             const parsedUser = JSON.parse(user);
-            setUserId(parsedUser.id_utilisateur);
+            const username = `${parsedUser.prenom_utilisateur}.${parsedUser.nom_utilisateur}`;
+            console.log('user', username);
         }
     };
 
@@ -46,13 +51,8 @@ function UserMain() {
         Cookies.remove('user');
     };
 
-
-
     useEffect(() => {
-
         checkCookie();
-
-
 
         const dropdownButtons = document.querySelectorAll('.dropdown-toggler');
         dropdownButtons.forEach((dropdownButton) => {
@@ -104,7 +104,7 @@ function UserMain() {
                             <li>
                                 <a className="dropdown-toggler" href="" onClick={handleLogout}>
                                     {/* faire en sorte de vider la session de l'utilisateur au clic
-                                    il sera automatiquement redirigé vers la racine / */}
+                  il sera automatiquement redirigé vers la racine / */}
                                     <Link to="/sign-in">Se déconnecter</Link>
                                 </a>
                             </li>
@@ -112,37 +112,11 @@ function UserMain() {
                     </div>
                 </div>
             </nav>
-            {/* {userId && <p>ID utilisateur : {userId}</p>} */}
 
-            <section id="intro">
-                <div class="info">
-                    <h1>Bienvenue !</h1>
-                    <p>
-                    Bienvenue sur votre espace personnel ! Nous sommes ravis de vous compter parmi nos utilisateurs et de vous offrir un espace dédié pour gérer votre compte et vos préférences.
-                    </p>
-                </div>
-                <div class="split-beer">
-                    <img
-                        class="beer"
-                        src="https://github.com/HugoTby/ProjetBTS/blob/main/documents/00.jpg?raw=true" />
-                    <img
-                        class="beer"
-                        src="https://github.com/HugoTby/ProjetBTS/blob/main/documents/10.jpg?raw=true" />
-                    <img
-                        class="beer"
-                        src="https://github.com/HugoTby/ProjetBTS/blob/main/documents/20.jpg?raw=true" />
-                </div>
-            </section>
-
-            
-
-            <footer>
-                <p>
-                Notre objectif est de vous fournir une expérience utilisateur fluide et agréable, et nous espérons que vous apprécierez les fonctionnalités et les services que nous avons mis en place pour vous.
-                </p>
-            </footer>
+            <TableauPanneau />
+            <GraphiqueEnergie />
         </div>
     );
 }
 
-export default UserMain;
+export default UserConsumption;

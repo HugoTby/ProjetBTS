@@ -11,6 +11,7 @@ import EspaceUser from './components/Espaceutilisateur';
 import ForgottenPassword from './components/resetpassword';
 import UserMain from './components/user-account/main';
 import UserTimeCapital from './components/user-account/timecapital';
+import UserConsumption from './components/user-account/consomation';
 import Contact from './components/contact';
 import Layout from './Layout';
 
@@ -27,7 +28,8 @@ root.render(
         <Route path="/contact" element={<Layout><Contact /></Layout>} />
         <Route path="/user-profile" element={<UserMain />} />
         <Route path="/time-capital" element={<UserTimeCapital />} />
-        {/* <Route path="*" element={<Error />} /> */}
+        <Route path="/consumption" element={<UserConsumption />} />
+        {/* <Route path="*" element={<  Error />} /> */}
       </Routes>
     </Router>
   </React.StrictMode>
